@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-So I'm thinking, currently, of doing what the learn function/minigame in quizlet used to be, before they made it all weird. Basically there will be a set of flashcards (ideally uploaded by the user) with textual "terms" and "definitions". The thing would basically test you on typing in the definitions for each term until they're all done correctly; it could also be swapped to have the "definitions" as the prompt and the term as the thing typed in. Behold! a modification!
+So I'm thinking, currently, of doing what the learn function/minigame in quizlet used to be, before they made it all weird. Basically there will be a set of flashcards (ideally uploaded by the user) with textual "terms" and "definitions". The thing would basically test you on typing in the definitions for each term until they're all done correctly; it could also be swapped to have the "definitions" as the prompt and the term as the thing typed in.
 
 
 > [!NOTE]
