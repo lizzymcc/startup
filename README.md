@@ -31,32 +31,25 @@ So I'm thinking, currently, of doing what the learn function/minigame in quizlet
 
 ![Design image](roughdesign.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ok i need to figure out how mermaid diagrams work
-
-```mermaid
-sequenceDiagram
-    actor User
-    User->>Server: upload or create list of flashcards
-
-    You->>Website: Replace this with your design
-```
+OK so I'm still a little unsure on certain details of how flashcard sets are going to be implemented, as it's based on quizlet which uses user-uploaded flashcard sets and such. To start out, I'm thinking that it'll just have a few pre-existing/hardcoded flashcard sets that the user can select from, and if I can find a way to get flashcard sets directly from quizlet itself, maybe do that. So currently, there will be a screen for selecting a flashcard set, a scene to scroll through the flashcard set, a screen to actually do the practicing (with a settings popup) and a high score popup of some sort.
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- selecting a flashcard set
+- running the game
+  - loop through flashcards that haven't been answered correctly yet, until all answered correctly
+- swapping terms/definitions
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - at least three distinct screens
+- **CSS** - should work on desktop and mobile
+- **React** - the practice game itself, high score settings
+- **Service** - again, the game itself, if possible (probably not) getting flashcard sets from quizlet, and I thought it would be fun to have a sunrise/sunset notifier that asks if you want to pause to look outside 
+- **DB/Login** - secure login/account system
+- **WebSocket** - sunrise notifier, get notifications if someone else is studying the same set perhaps
 
 ## 🚀 AWS deliverable
 
