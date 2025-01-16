@@ -20,9 +20,9 @@ Server address: 18.232.252.246
 
 .pem is the key/value filetype we used
 
-From the `cs4` folder (I guess we're never filling in the full class number now) (and I just realized that's actually the folder for the other cs class. welp) in git bash: `ssh -i totoro260 ubuntu@18.232.252.246`
+From the `cs4` folder (I guess we're never filling in the full class number now) (and I just realized that's actually the folder for the other cs class. welp) in git bash: `ssh -i 260totoro.pem ubuntu@18.232.252.246`
 
-from the cs260 folder, it's `ssh -i ../cs4/totoro260 ubuntu@18.232.252.246`
+from the cs260 folder, it's `ssh -i ../cs4/260totoro.pem ubuntu@18.232.252.246`
 
 
 ## HTML Notes
