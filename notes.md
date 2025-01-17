@@ -26,6 +26,8 @@ from the cs260 folder, it's `ssh -i ../cs4/260totoro.pem ubuntu@18.232.252.246`
 
 in console, use `exit` to exit the ssh (this won't stop or terminate the server don't worry)
 
+domain name: oldquizletlearn260.click
+
 
 
 
