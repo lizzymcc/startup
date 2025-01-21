@@ -33,3 +33,8 @@ domain name: oldquizletlearn260.click
 
 ## HTML Notes
 the  `a` in  `a href` stands for anchor, interesting!
+
+besides `src`, `img` has other attributes including `width` and `alt` which sets the alt text. you can just put them all in the same tag.
+
+Apparently there's a type of section in main called `<aside>` which I'm still not sure I completely understand, apparently it's for stuff that doesn't fit the main page's content? I'm not sure how it actually gets implemented differently but we'll probably find out soon.
+
