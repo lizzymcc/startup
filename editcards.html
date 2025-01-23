@@ -6,11 +6,12 @@
 	</head>
 	<body>
 		<header>
-			<h1> <input type= "text" id="setname" placeholder="Flashcard Set Name"></h1>
-			<a href = index.html> cancel</a>
-			<a href = flashcardset.html> save and study</a>
 		</header>
-		<main>
+		<main>		
+			<h1> Edit flashcard set</h1>
+			<hr>	
+			<h1> <input type= "text" id="setname" placeholder="Flashcard Set Name"></h1>
+
 			<table>
 				<tr>
 					<th>Term</th>
@@ -18,14 +19,19 @@
 				</tr>
 				<tr>
 					<td><input type= "text" placeholder="term"></td>
-					<td>placeholder definition 1</td>
-				</tr>
-				<tr>
-					<td>placeholder term 2</td>
-					<td>placeholder definition 2</td>
+					<td><input type= "text" placeholder="definition"><button>🗑️</button></td>
 				</tr>
 			</table>
+			<button> add row </button><br>
+			<a href = index.html> <button>cancel</button></a>
+			<button> save changes </button>
+			<a href = flashcardset.html> <button>save & study</button></a>
+			<hr>
 		</main>
-		<footer> <a href = "https://github.com/lizzymcc/startup"> GitHub </a></footer>
+		<footer> 
+
+			
+			<a href = "https://github.com/lizzymcc/startup"> GitHub </a>
+		</footer>
 	</body>
 </html>
