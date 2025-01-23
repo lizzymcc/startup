@@ -62,15 +62,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** -pages for set select, sets, editing sets, playing the game itself, login, high scores, and settings. I might still need to change how these interact bc some things might not work unless the user is logged in, or like a winscreen would only be triggered by the javascript
+- [ ] **Proper HTML element usage** -
+- [x] **Links** - Pages link to each other as appropriate, and to github
+- [ ] **Text** - there sure is text in there
+- [x] **3rd party API placeholder** - sunset notification on play screen
+- [x] **Images** - back button
+- [x] **Login placeholder** - it's there
+- [x] **DB data placeholder** - placeholder data for the flashcard sets, high scores, honestly a large percentage of the text in the final thing is going to be from the DB data
+- [x] **WebSocket placeholder** - again, sunset notification on play screen, as well as the updating timer for the score and the updating of the placing on the high scoreboard of that time
 
 ## 🚀 CSS deliverable
 
