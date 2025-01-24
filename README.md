@@ -63,9 +63,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **HTML pages** -pages for set select, sets, editing sets, playing the game itself, login, high scores, and settings. I might still need to change how these interact bc some things might not work unless the user is logged in, or like a winscreen would only be triggered by the javascript
-- [ ] **Proper HTML element usage** -
+- [x] **Proper HTML element usage** - I think I did this fairly well. inputs and navbars and footers and such
 - [x] **Links** - Pages link to each other as appropriate, and to github
-- [ ] **Text** - there sure is text in there
+- [x] **Text** - It's there, not sure what else to say about it
 - [x] **3rd party API placeholder** - sunset notification on play screen
 - [x] **Images** - back button
 - [x] **Login placeholder** - it's there
