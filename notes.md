@@ -44,4 +44,4 @@ Apparently there's a type of section in main called `<aside>` which I'm still no
 
 I'm never quite sure what to put in these things
 
-in flex displays, `justify-content` aligns items on the main axis and `align-items` aligns them on the other axis. `justify-content` options: `flex-start` for beginning, `flex-end` for right side/bottom/end, `center` for center. aso other options but those are the main three i want to remember.
+in flex displays, `justify-content` aligns items on the main axis and `align-items` aligns them on the other axis. `justify-content` options: `flex-start` for beginning, `flex-end` for right side/bottom/end, `center` for center. aso other options but those are the main three i think i particularly want to remember.

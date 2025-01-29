@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(https://fontlibrary.org//face/opendyslexic)
+}	
+body {
+	font-family: 'OpenDyslexic';
+
+}
