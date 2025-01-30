@@ -76,9 +76,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - Each page has a header with the title and (home screen excluded) a back button, and a footer with the github link.
+- [ ] **Navigation elements** - back button, again, and 
+- [ ] **Responsive to window resizing** - At its current stage I don't know that it's ideal on every screen (mobile), but it certainly responds fairly well to changes in size when I move the browser from half-screen to full-screen on my laptop. Well, the ones that I've finished so far. FIXME: do not leave this like this when you turn the project in, update it lol
 - [ ] **Application elements** - I did not complete this part of the deliverable.
 - [ ] **Application text content** - I did not complete this part of the deliverable.
 - [ ] **Application images** - I did not complete this part of the deliverable.
