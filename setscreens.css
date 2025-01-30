@@ -1,16 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import url(https://jeffreymaniac.github.io/OpenDyslexic-font-for-css/opendyslexic.css);
-.cardlist {
-	padding:5px;
+
+.cardlist{
+	display:flex;
+	flex-direction:column;
 	flex:1;
-	display:grid;
-	grid-template-columns: 1fr 1fr;
-	grid-column-gap:10px;
-	grid-row-gap:10px;
-	grid-auto-rows: 80px;
 }
-.card {
-	background: cornsilk;
-	border: 2px solid rgb(200, 189, 149);
+.cardpair{
+	display:flex;
+	flex:1;
+	flex-direction:row;
+	flex-grow: initial;
+}
+.card{
+	display:flex;
+	flex-direction:row;
+	width:50%;
+	padding:5px;
+	border-radius:5px;
+	background:cornsilk;
+	margin: 5px;
+	align-items:center;
+}
+
+.pagespace {
+	flex-direction: column;
+	padding:5px;
+}
+.card > input[type=text]{
+	flex:1,0.5,1em;
+	min-width:1em;
+	margin:5px;
+}
+h1{
+	margin:5px;
+	text-align:center;
 }
