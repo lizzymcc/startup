@@ -7,6 +7,7 @@ body {
 	flex-direction:column;
 	margin:0;
 	height: 100vh;
+	overflow:hidden;
 }
 header {
 	background: blue;
@@ -26,6 +27,7 @@ main {
 	flex-direction: row;
 	margin:0;
 	width: 100v2;
+	overflow:hidden;
 }
 .sidebar {
 	flex: 0 5 150px;
@@ -47,6 +49,7 @@ main {
 .pagespace {
 	flex: 1 1;
 	display: flex;
+	overflow:hidden;
 }
 .playbox {
 	background: cornsilk;
@@ -55,6 +58,7 @@ main {
 	margin: 30px;
 	height:fit-content;
 	width:100%;
+	
 }
 footer {
 	background:lightseagreen;
@@ -69,4 +73,30 @@ footer > a {
 	background: transparent;
 	border: transparent;
 	border-bottom: 1px solid black;
+}
+
+.loginheader {
+	font-size: 15px;
+}
+
+.setlist {
+	margin: 10px;
+	padding: 10px;
+	display: grid;
+	overflow:scroll;
+	
+}
+.setdisp {
+	border:#808080 2px solid;
+	padding: 5px;
+	margin: 10px;
+	height:max-content;
+	justify-items: start;
+}
+h3 {
+	font-weight:bold;
+}
+h3 > a {
+	text-decoration: none;
+
 }
