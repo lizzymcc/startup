@@ -1,10 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-@font-face {
-	font-family: 'OpenDyslexic';
-	src: url(https://fontlibrary.org//face/opendyslexic)
-}	
+@import url(https://jeffreymaniac.github.io/OpenDyslexic-font-for-css/opendyslexic.css);
 body {
-	font-family: 'OpenDyslexic';
-
+	font-family:Josefin Sans;
+	display:flex;
+	flex-direction:column;
+	margin:0;
+	height: 100vh;
+}
+header {
+	background: blue;
+	display:flex;
+	flex-direction:row;
+	color:white;
+	padding:20px;
+	flex: 0 30px;
+}
+main {
+	flex: 1;
+	display:flex;
+	flex-direction: row;
+	margin:0;
+	width: 100v2;
+}
+.sidebar {
+	flex: 0 5 150px;
+	padding: 10px;
+	background:#f5f5f5;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.pagespace {
+	flex: 1 1;
+	display: flex;
+}
+.playbox {
+	background: cornsilk;
+	border: 2px solid rgb(200, 189, 149);
+	padding: 20px;
+	margin: 30px;
+	height:fit-content;
+	width:100%;
+}
+footer {
+	background:lightseagreen;
+	flex: 0 30px;
+	color: white;
+	justify-content:flex-end;
+}
+.inputline {
+	background: transparent;
+	border: transparent;
+	border-bottom: 1px solid black;
 }
