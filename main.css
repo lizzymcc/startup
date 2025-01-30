@@ -15,6 +15,10 @@ header {
 	color:white;
 	padding:20px;
 	flex: 0 30px;
+	align-items: center;
+	justify-items:flex-start;
+	gap: 20px;
+	font-size: 30px;
 }
 main {
 	flex: 1;
@@ -30,6 +34,15 @@ main {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+.submitbutton {
+	background:blue; 
+	color: #f5f5f5;
+	border-radius:5px;
+	border: 2px solid #0000ee;
+}
+.submitbutton:active {
+	background: #808080;
 }
 .pagespace {
 	flex: 1 1;
@@ -47,7 +60,10 @@ footer {
 	background:lightseagreen;
 	flex: 0 30px;
 	color: white;
-	justify-content:flex-end;
+	text-align: center;
+}
+footer > a {
+	color: white;
 }
 .inputline {
 	background: transparent;
