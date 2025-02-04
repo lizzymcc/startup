@@ -5,28 +5,33 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="main.css" />
+		<link rel="stylesheet" href="scorescreen.css"/>
 		<title>Login</title>
 	</head>
 	<body>
-		<nav>
-			<a href = index.html><img src=roughbackbutton.png alt="back" height="20px"></a>
-		</nav>
 		<header>
-			<h1> Login </h1>
-			<hr>
+			<div class = 'backbutton'> 
+				<a href = index.html>
+					<img src = roughbackbutton.png alt=back height=30px>
+				</a>
+			</div>
+			<div class = 'pagetitle'>
+				Log in
+			</div>
 		</header>
 		<main>
-			<form action = "login.html">
-				username:
-				<input type="text" placeholder ="username">
-				<br>
-				password:
-				<input type="password">
-				<br>
-				<button> log in</button>
-				<button>create new account</button>
+			<div class="pagespace">
+				<form action = "login.html">
+					username:
+					<input type="text" placeholder ="username">
+					<br>
+					password:
+					<input type="password">
+					<br>
+					<button> log in</button>
+					<button>create new account</button>
 				</form>
-			<hr>
+			</div>
 		</main>
 		<footer> <a href = "https://github.com/lizzymcc/startup"> GitHub </a></footer>
 	</body>
