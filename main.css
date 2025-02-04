@@ -101,3 +101,47 @@ h3 > a {
 	text-decoration: none;
 
 }
+.sidebar > path {
+	fill:currentColor;
+}
+
+.settings {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	align-items: center;
+	width:100%;
+}
+.settingsform {
+	background: beige;
+	border: solid 5px #0000ee;
+	padding: 10px;
+	border-radius:5px;
+}
+.settingsq {
+	margin: 10px;
+	text-align: center;
+}
+.settingsq > legend {
+	margin-bottom: 0px;
+	font-size:default;
+}
+.settingsq > .form-check-input {
+	border-radius:10%;
+	border: 2px solid;
+}
+.settingsq > .form-check-input {
+	border-radius:10%;
+	accent-color:indigo;
+	border: 2px solid;
+}
+
+.settingsq > .form-check-input:checked {
+	border: 2px solid;
+	background-color:#808080;
+	color: #0000ee;
+}
+
+a:hover > img {
+	filter: contrast(0%) brightness(200%) drop-shadow(0px 0px 2px black);
+}

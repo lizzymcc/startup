@@ -9,25 +9,33 @@
 		<link rel = "icon" href = "OQLicon.png">
 	</head>
 	<body>
-		<nav>
-			<a href=play.html><img src = roughbackbutton.png alt="back button" height="30px"></a>
-		</nav>
 		<header>
-			<h1>Settings</h1>
-			<hr> 
-		</header>
+			<div class = 'backbutton'> 
+				<a href = play.html>
+					<img src = roughbackbutton.png alt=back height=30px>
+				</a>
+			</div>
+			<div class = 'pagetitle'>
+				Settings
+			</div>
+	</header>
 		<main>
-			<label for="sunsetOn">Allow sunrise/sunset notifications for your area?</label>
-			<input type="checkbox" id="sunsetOn" name="sunsetOn">
-			<fieldset>
-				<legend>ask for</legend>
-				<input type="radio" id="askT" name="qa" value="askT">
-				<label for="askT">term</label>
-				<br>
-				<input type="radio" id="askD" name="qa" value="askD">
-				<label for="askD">definition</label>
-			</fieldset>
-			<hr>
+			<div class = settings>
+				<div class = settingsform>
+
+					<fieldset class = "settingsq">
+						<legend>Ask for:</legend>
+						<input type="radio" id="askT" name="qa" value="askT">
+						<label for="askT">term</label>
+						<input type="radio" checked="checked" id="askD" name="qa" value="askD">
+						<label for="askD">definition</label>
+					</fieldset>
+						<div class = "settingsq">
+						<label for="sunsetOn">Allow sunrise/sunset notifications for your area?</label>
+						<input type="checkbox" id="sunsetOn" name="sunsetOn" class = "form-check-input">
+					</div>
+				</div>
+			</div>
 			
 		</main>
 		<footer> <a href = "https://github.com/lizzymcc/startup"> GitHub </a></footer>
