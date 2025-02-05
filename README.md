@@ -77,11 +77,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **Header, footer, and main content body** - Each page has a header with the title and (home screen excluded) a back button, and a footer with the github link.
-- [ ] **Navigation elements** - back button, again, and 
-- [ ] **Responsive to window resizing** - At its current stage I don't know that it's ideal on every screen (mobile), but it certainly responds fairly well to changes in size when I move the browser from half-screen to full-screen on my laptop. Well, the ones that I've finished so far. FIXME: do not leave this like this when you turn the project in, update it lol
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Navigation elements** - back button, again, links between pages. Login and Settings pages have been moved to overlays within their respective pages of origin (and login might be added to all the other pages once we get into react).
+- [x] **Responsive to window resizing** - I can't promise it works on every size (mobile, etc) but it adapts its size when the window is resized on my laptop
+- [x] **Application elements** - I mean the javascript isn't in yet (besides the part for the overlays), but the screens and forms are in
+- [x] **Application text content** - page titles, etc
+- [x] **Application images** - again, fairly minimal but the settings icon and back button have been added
 
 ## 🚀 React part 1: Routing deliverable
 

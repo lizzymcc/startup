@@ -11,16 +11,44 @@
 		</style>
 	</head>
 	<body>
+		<div id="overlay">				
+			<div class = settingsform>
+				<div class = overlaytitle>
+					<div class='backbutton'>
+						<a onclick = "document.getElementById('overlay').style.display = 'none'">
+							<img src = backbutton.png alt="back" height="30px">
+						</a>
+					</div>
+					<h2> Login </h2>
+				</div>
+				<div class="loginform">
+					<form action = "index.html">
+						<div class="loginline">
+							<label for = "uname"> username: </label>
+							<input type="text" placeholder ="username" id="uname">
+						</div>
+						<div class="loginline">
+							<label for = "pword"> password: </label>
+							<input type="password" id="pword">
+						</div>
+						<div class="loginline">
+							<button class="btn btn-primary"> log in</button>
+							<button class="btn btn-primary">create new account</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 		<header>
-			<h1>Flashcard Set Select</h1>
+			<div class = 'pagetitle'>
+				Flashcard Set Select
+			</div>
+			<div class='header-user'><button class = "btn btn-light btn-sm" onclick = "document.getElementById('overlay').style.display = 'flex'">Login
+			</button></div>
 		</header>
 		<main>
 			<div class = sidebar> 
-				<div class="loginheader"><img alt = "OQL icon" src=OQLicon.png height = 30px>
-					<a href = login.html> <button>Login</button> 
-					</a>
-				</div>
-				<a href = editcards.html><button>Create new set</button></a>
+				<a href = editcards.html><button class="btn btn-primary">New Set</button></a>
 			</div>
 			<div class = pagespace>
 				<div class = setlist>

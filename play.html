@@ -46,24 +46,22 @@
 		<main>
 
 			<div class = sidebar>
-				<div class = scorenotes>
+				<div class = "sidebartext score">
 					<p>words left: 3 of 12, time: 5:01, rank: 15</p>
 				</div>
-				<hr>
-				<div class = settingsbutton>
-					<a onclick = "document.getElementById('overlay').style.display = 'flex'">
-						<img src="gear.svg" alt="settings logo" height="30px">
-					</a>
-				</div>
-				<hr>
-				<div class = restartbutton>
-					<button>restart</button>
-				</div>
-				<hr>
-				<div class = sunsetnotes>
+
+				<div class = "sidebartext sunsetnotes">
 					<p> 5:33 pm - The sun is setting in your area!</p>
 				</div>
-				<hr>
+				<div class = twobuttons>
+					<button class="btn btn-primary" onclick = "document.getElementById('overlay').style.display = 'flex'">
+						<img src="gear.svg" alt="settings logo" height=15pc >
+					</a>
+					<div class = restartbutton>
+						<button class="btn btn-primary">restart</button>
+					</div>
+				</div>				
+
 			</div>
 			<div class = pagespace>
 				<div class = playbox>
@@ -72,7 +70,7 @@
 					</div>
 					<div>
 						<input type="text" placeholder="enter definition" class="inputline"/>
-						<button class = submitbutton>submit</button>
+						<button class = "btn btn-primary">submit</button>
 					</div>
 				</div>
 			</div>

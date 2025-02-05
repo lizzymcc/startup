@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import url(https://jeffreymaniac.github.io/OpenDyslexic-font-for-css/opendyslexic.css);
-
+:root{
+	--b: #0d6efd;
+	--ow: rgb(238, 240, 245);
+	--b2: cornflowerblue;
+}
 .cardlist{
 	display:flex;
 	flex-direction:column;
@@ -19,7 +23,7 @@
 	width:50%;
 	padding:5px;
 	border-radius:5px;
-	background:cornsilk;
+	background:var(--ow);
 	margin: 5px;
 	align-items:center;
 }
