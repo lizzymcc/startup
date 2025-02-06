@@ -81,7 +81,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Responsive to window resizing** - I can't promise it works on every size (mobile, etc) but it adapts its size when the window is resized on my laptop
 - [x] **Application elements** - I mean the javascript isn't in yet (besides the part for the overlays), but the screens and forms are in
 - [x] **Application text content** - page titles, etc
-- [x] **Application images** - again, fairly minimal but the settings icon and back button have been added
+- [x] **Application images** - again, fairly minimal but the settings icon has been added and back button updated
 
 ## 🚀 React part 1: Routing deliverable
 
