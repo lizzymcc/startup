@@ -10,25 +10,25 @@
 	</head>
 	<body>
 		<div id="overlay">				
-			<div class = settingsform>
-				<div class = overlaytitle>
+			<div class = 'settingsform'>
+				<div class = 'overlaytitle'>
 					<div class='backbutton'>
 						<a onclick = "document.getElementById('overlay').style.display = 'none'">
-							<img src = backbutton.png alt="back" height="30px">
+							<img src = backbutton.png alt="back" height="30px"/>
 						</a>
 					</div>
 					<h2> Settings </h2>
 				</div>
 				<fieldset class = "settingsq">
 					<h4>Ask for:</h4>
-					<input type="radio" id="askT" name="qa" value="askT">
+					<input type="radio" id="askT" name="qa" value="askT"/>
 					<label for="askT">term</label>
-					<input type="radio" checked="checked" id="askD" name="qa" value="askD">
+					<input type="radio" checked="checked" id="askD" name="qa" value="askD"/>
 					<label for="askD">definition</label>
 				</fieldset>
 				<div class = "settingsq">
 					<label for="sunsetOn">Allow sunrise/sunset notifications for your area?</label>
-					<input type="checkbox" id="sunsetOn" name="sunsetOn" class = "form-check-input">
+					<input type="checkbox" id="sunsetOn" name="sunsetOn" class = "form-check-input"/>
 				</div>
 			</div>
 		</div>
@@ -56,7 +56,7 @@
 				<div class = twobuttons>
 					<button class="btn btn-primary" onclick = "document.getElementById('overlay').style.display = 'flex'">
 						<img src="gear.svg" alt="settings logo" height=15pc >
-					</a>
+					</button>
 					<div class = restartbutton>
 						<button class="btn btn-primary">restart</button>
 					</div>
