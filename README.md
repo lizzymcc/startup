@@ -87,9 +87,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - Routing between login and voting components.
+- [x] **Bundled using Vite** - done!
+- [x] **Components** - pages have been moved to functions. the original HTML files are still in the src folder for now, but solely for reference. Also, several on-page components that should be list items  have been made into functions within the file.
+- [x] **Router** - Navigation between pages is done through routing. 
+
+Login button and overlay have been moved to all pages though they are not yet functional. The settings overlay also doesn't work with the current setup, but the html for both has been put into the jsx files and made jsx-friendly. 
 
 ## 🚀 React part 2: Reactivity
 
