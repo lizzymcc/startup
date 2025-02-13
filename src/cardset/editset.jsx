@@ -15,7 +15,7 @@ function CardPair({term, def}){
 export function EditSet(){
 	return (
 		<div className = 'main'>
-			<div className ="pagespace">		
+			<div className ="pagespace spagespace">		
 				<h1> 
 					<input type= "text" id="setname" placeholder="Flashcard Set Name"className = 'inputline' />
 				</h1>
@@ -30,6 +30,5 @@ export function EditSet(){
 				<NavLink to = '/cardset/5'><button className ="btn btn-primary">save & study</button></NavLink>
 			</div>
 		</div>
-
 		);
 }

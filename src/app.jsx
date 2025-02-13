@@ -5,6 +5,7 @@ import {SetSelect} from './SetSelect/SetSelect';
 import {CardSet} from './cardset/cardset';
 import {EditSet} from './cardset/editset';
 import {Play} from './play/play'
+import {Scores} from './scores/scores'
 import './app.css';
 
 function LoginOverlay(){
@@ -85,7 +86,7 @@ export default function App() {
 						<Route path='/cardset/:setid' element={<CardSet />} />
 						<Route path='/cardset/edit/:setid' element={<EditSet />} />
 						<Route path='/play/:setid' element={<Play />} />
-						{/*<Route path='/scores/:setid' element={<Scores />} />*/}
+						<Route path='/scores/:setid' element={<Scores />} />
 						<Route path='*' element={<NotFound />} />
 					</Routes>
 				<footer> <a href = "https://github.com/lizzymcc/startup"> GitHub </a></footer>

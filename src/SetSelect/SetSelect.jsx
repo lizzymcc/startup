@@ -3,11 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 
 import '../app.css';
-function SetDisp(setid){
+function SetDisp(props){
 	return(
 		<div className = "setdisp">
 			<h3>
-				<NavLink to= '/cardset/5'>
+				<NavLink to= {`/cardset/${props.setid}`}>
 					set title goes here
 				</NavLink>
 			</h3>
@@ -16,6 +16,7 @@ function SetDisp(setid){
 	)
 }
 export function SetSelect() {
+	const idlist = ['a', 'b', 'c', 'd5', 'e','5102'];
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 
@@ -23,13 +24,9 @@ export function SetSelect() {
 			</div>
 			<div className = 'pagespace'>
 				<div className = 'setlist'>
-					{<SetDisp />}
-					{<SetDisp />}
-					{<SetDisp />}
-					{<SetDisp />}
-					{<SetDisp />}
+					{idlist.map((id)=><SetDisp setid={id}/>)}
 				</div>
 			</div>
 		</div>
-	)
+	);
 };

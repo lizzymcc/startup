@@ -2,13 +2,12 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 
-import '../app.css';
 import './scorescreen.css';
 
 export function Scores(){
 	return(
-		<main>
-		<div className ="pagespace">
+		<div className='main'>
+		<div className ="pagespace scorespace">
 			<div className ="personalscore">
 				<h2>Your top score: <span className ='scorenumber'>3:20</span></h2>
 				<p>putting you in <span className ='ranknumber'>8th</span> place overall</p>
@@ -47,6 +46,6 @@ export function Scores(){
 			</table>
 
 		</div>
-		</main>
+		</div>
 	);
 }
