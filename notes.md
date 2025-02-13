@@ -49,3 +49,5 @@ in flex displays, `justify-content` aligns items on the main axis and `align-ite
 ## React notes
 
 I keep learning cool things but I'm never sure what to write in here about them. idk. react seems cool. I get the feeling that this stage of the project might be better suited for One Navbar On All Pages than what I'm doing, but let's try this!
+
+alright, I got it basically working. I'm getting the vibe that I"ll be doing a lot of stuff with parameters in the next project, but I was probably going to regardless. also not sure when we'll be adding and using databases but that'll probably be a big part of it as well.

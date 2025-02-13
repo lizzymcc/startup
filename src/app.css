@@ -212,6 +212,11 @@ a:hover > img {
 .twobuttons > button{
 	margin:2px;
 }
+.twobuttons {
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
 .sidebartext{
 	padding:5px;
 	background:white;
