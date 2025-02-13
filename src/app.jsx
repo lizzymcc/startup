@@ -89,7 +89,7 @@ export default function App() {
 						<Route path='/scores/:setid' element={<Scores />} />
 						<Route path='*' element={<NotFound />} />
 					</Routes>
-				<footer> <a href = "https://github.com/lizzymcc/startup"> GitHub </a></footer>
+				<footer> CS 260 project - Lizzy McClellan <a href = "https://github.com/lizzymcc/startup"> (GitHub)</a> </footer>
 			</div>
 		</BrowserRouter>
 	);
