@@ -1,0 +1,88 @@
+{
+	"sets": [
+		{
+			"id":5038,
+			"title":"Placeholder one",
+			"creating_user":"lizzym",
+			"privateset":"false",
+			"cards":[
+				{
+					"term": "term1",
+					"def": "def1"
+				},
+				{
+					"term": "term2",
+					"def": "def2"
+				},
+				{
+					"term": "term3",
+					"def": "def3"
+				},
+				{
+					"term": "term4",
+					"def": "def4"
+				}
+			]			
+		},
+		{
+			"id":5039,
+			"title":"Placeholder two",
+			"creating_user":"lizzym",
+			"privateset":"false",
+			"cards":[
+				{
+					"term": "ab",
+					"def": "cd"
+				},
+				{
+					"term": "ef",
+					"def": "gh"
+				},
+				{
+					"term": "ij",
+					"def": "kl"
+				},
+				{
+					"term": "mn",
+					"def": "op"
+				}
+			]			
+		},
+		{
+			"id":5030,
+			"title":"Placeholder three - greek terms for love",
+			"creating_user":"default",
+			"privateset":"false",
+			"cards":[
+				{
+					"term": "Eros",
+					"def": "passion"
+				},
+				{
+					"term": "Storge",
+					"def": "parental love, family love"
+				},
+				{
+					"term": "Ludus",
+					"def": "playful love"
+				},
+				{
+					"term": "Pragma",
+					"def": "long-standing love"
+				},
+				{
+					"term": "Philia",
+					"def": "deep friendship"
+				},
+				{
+					"term": "Agape",
+					"def": "Christlike love"
+				},
+				{
+					"term": "Pilautia",
+					"def": "self-love"
+				}
+			]			
+		}
+	]
+}

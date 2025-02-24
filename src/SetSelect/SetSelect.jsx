@@ -1,21 +1,22 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
-
+import placeholdersets from '../placeholdersets.json';
 import '../app.css';
 function SetDisp(props){
 	return(
 		<div className = "setdisp">
 			<h3>
-				<NavLink to= {`/cardset/${props.setid}`}>
-					set title goes here
+				<NavLink to= {`/cardset/${props.set.id}`}>
+					{props.set.title}
 				</NavLink>
 			</h3>
-			<p>[#] cards - last studied mm/dd/yyyy</p>
+			<p>[{props.set.cards.length}] cards - last studied mm/dd/yyyy</p>
 		</div>
 	)
 }
 export function SetSelect() {
+	const setlist = placeholdersets.sets;
 	const idlist = ['a', 'b', 'c', 'd5', 'e','5102'];
 	return(
 		<div className = 'main'>
@@ -24,7 +25,7 @@ export function SetSelect() {
 			</div>
 			<div className = 'pagespace'>
 				<div className = 'setlist'>
-					{idlist.map((id)=><SetDisp setid={id}/>)}
+					{setlist.map((id)=><SetDisp set={id}/>)}
 				</div>
 			</div>
 		</div>

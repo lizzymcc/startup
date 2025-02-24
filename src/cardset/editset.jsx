@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import placeholdersets from '../placeholdersets.json';
 
 import '../app.css';
 import './setscreens.css';

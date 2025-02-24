@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useParams } from 'react-router-dom';
+import placeholdersets from '../placeholdersets.json';
 
 import '../app.css';
 import './setscreens.css';
@@ -18,13 +19,14 @@ function CardPair({term, def}){
 	
 }
 export function CardSet(props){
+	const setId = useParams();
 	return (
 		<div className = 'main'>
 			<div className = 'sidebar'>
-				<NavLink to= '/play/:setid' > <button className ='btn btn-primary'>play</button> </NavLink>
-				<NavLink to = '/cardset/edit/5'><button className ="btn btn-primary">edit cards</button></NavLink>
+				<NavLink to= {`/play/${setId}`} > <button className ='btn btn-primary'>play</button> </NavLink>
+				<NavLink to = {`/cardset/edit/${setId}`}><button className ="btn btn-primary">edit cards</button></NavLink>
 				<NavLink to = '/cardset/edit/6'><button className ="btn btn-primary">copy set</button></NavLink>
-				<NavLink to='/scores/:setid'><button className ="btn btn-primary">high scores</button></NavLink>
+				<NavLink to={`/scores/${setId}`}><button className ="btn btn-primary">high scores</button></NavLink>
 
 			</div>
 			<div className = 'pagespace spagespace'>

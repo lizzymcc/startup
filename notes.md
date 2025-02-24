@@ -51,3 +51,23 @@ in flex displays, `justify-content` aligns items on the main axis and `align-ite
 I keep learning cool things but I'm never sure what to write in here about them. idk. react seems cool. I get the feeling that this stage of the project might be better suited for One Navbar On All Pages than what I'm doing, but let's try this!
 
 alright, I got it basically working. I'm getting the vibe that I"ll be doing a lot of stuff with parameters in the next project, but I was probably going to regardless. also not sure when we'll be adding and using databases but that'll probably be a big part of it as well.
+
+## react part 2 notes
+
+Javascript destructuring -- 
+if t is an array, then 
+`const [b,c,d] = t` will set b to t[0], c to t[1], d to t[2], etc.
+If t isn't long enough, the overflowing variable(s) becomes undefined.
+
+`const [a, b, ...c] = t` will set a and b to t[0] and t[1], and then all the rest of t is stored in c as an array, like c becomes (python) t[2:-1] (does that notation in javascript? or just python?)
+
+you can also set a default value for the variables in the start that they'll use if the list isn't long enough to include them.
+
+### `react.useState` uses destructuring!
+
+<small> also you can put `code blocks` inside headers in markdown!</small>
+
+it returns... the inital value (that it had as a parameter) and a function that updates the variable/state to whatever is input... ok, i think i understand this, some of the stuff behind the scenes is still confusing but now I get why setColor or whatever function it is never needs to be defined elsewhere in the code. 
+
+ok so what is an effect hook...
+useState is a hook, and useEffect is a hook... I feel like I'm missing some information. Like what the difference is between a state & effect, and how you would access them outside of hooks. and how they relate to needing an object or class or something.

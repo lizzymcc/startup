@@ -1,46 +1,17 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useParams } from 'react-router-dom';
 import {SetSelect} from './SetSelect/SetSelect';
 import {CardSet} from './cardset/cardset';
 import {EditSet} from './cardset/editset';
-import {Play} from './play/play'
-import {Scores} from './scores/scores'
+import {Play} from './play/play';
+import {Scores} from './scores/scores';
+import {Login} from './login/login';
+import { AuthState } from './login/authState';
 import './app.css';
 
-function LoginOverlay(){
-	return(
-		<div id="login_overlay">				
-			<div className = 'settingsform'>
-				<div className = 'overlaytitle'>
-					<div className ='backbutton'>
-						<a>
-							<img src = '/backbutton.png' alt="back" height="30px" />
-						</a>
-					</div>
-					<h2> Login </h2>
-				</div>
-				<div className ="loginform">
-					<form action = "index.html">
-						<div className ="loginline">
-							<label for = "uname"> username: </label>
-							<input type="text" placeholder ="username" id="uname" />
-						</div>
-						<div className ="loginline">
-							<label for = "pword"> password: </label>
-							<input type="password" id="pword" />
-						</div>
-						<div className ="loginline">
-							<button className ="btn btn-primary"> log in</button>
-							<button className ="btn btn-primary">create new account</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 
-	)
-}
+
 function NotFound(){
 	return(	
 		<h1>404 not found</h1>
@@ -59,10 +30,14 @@ function BackButton({to}){
 	);
 }
 export default function App() {
+	const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+	const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+	const [authState, setAuthState] = React.useState(currentAuthState);
+	const [loginDisp, setLoginDisp] = React.useState('none');
 	return (
 		<BrowserRouter>
 			<div className = "body">
-				{<LoginOverlay />}
+				{<Login disp={loginDisp}/>}
 				<header>
 					<Routes>
 						<Route path='/' element={<EmptySpot />} exact />
