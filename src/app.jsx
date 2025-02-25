@@ -33,11 +33,17 @@ export default function App() {
 	const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
 	const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
 	const [authState, setAuthState] = React.useState(currentAuthState);
-	const [loginDisp, setLoginDisp] = React.useState('none');
+	const [loginDisp, setLoginDisp] = React.useState(false);
+	const [pageTitle, setPageTitle] = React.useState('Set select');
+	function loginShow(e) {
+		if (!loginDisp){
+			setLoginDisp(true);
+		}
+	}
 	return (
 		<BrowserRouter>
 			<div className = "body">
-				{<Login disp={loginDisp}/>}
+				{<Login show={loginDisp} authState={authState} hideFunc={setLoginDisp} authfunc = {setAuthState} uname={userName} unamefunc = {setUserName}/>}
 				<header>
 					<Routes>
 						<Route path='/' element={<EmptySpot />} exact />
@@ -49,18 +55,18 @@ export default function App() {
 						
 					</Routes>
 					<div className= 'pagetitle'>
-						page title will go here
+						{pageTitle}
 					</div>
 					<div className='header-user'>
-						<button className= "btn btn-light btn-sm">
+						<button className= "btn btn-light btn-sm"  onClick={loginShow}>
 							Login
 					</button></div>
 				</header>
 					<Routes>
 						<Route path='/' element={<SetSelect />} exact />
-						<Route path='/cardset/:setid' element={<CardSet />} />
+						<Route path='/cardset/:setid' element={<CardSet  changetitle={setPageTitle}/>} />
 						<Route path='/cardset/edit/:setid' element={<EditSet />} />
-						<Route path='/play/:setid' element={<Play />} />
+						<Route path='/play/:setid' element={<Play/>} />
 						<Route path='/scores/:setid' element={<Scores />} />
 						<Route path='*' element={<NotFound />} />
 					</Routes>

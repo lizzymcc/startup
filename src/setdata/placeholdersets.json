@@ -4,7 +4,7 @@
 			"id":5038,
 			"title":"Placeholder one",
 			"creating_user":"lizzym",
-			"privateset":"false",
+			"privateset":false,
 			"cards":[
 				{
 					"term": "term1",
@@ -28,7 +28,7 @@
 			"id":5039,
 			"title":"Placeholder two",
 			"creating_user":"lizzym",
-			"privateset":"false",
+			"privateset":false,
 			"cards":[
 				{
 					"term": "ab",
@@ -52,7 +52,7 @@
 			"id":5030,
 			"title":"Placeholder three - greek terms for love",
 			"creating_user":"default",
-			"privateset":"false",
+			"privateset":false,
 			"cards":[
 				{
 					"term": "Eros",
@@ -85,4 +85,5 @@
 			]			
 		}
 	]
+
 }

@@ -1,25 +1,32 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink, useParams } from 'react-router-dom';
-import placeholdersets from '../placeholdersets.json';
+import placeholdersets from '../setdata/placeholdersets.json';
 
 import '../app.css';
 import './setscreens.css';
-function CardPair({term, def}){
+function CardPair(props){
 	return(
 		<div className = 'cardpair'>
 			<div className = 'card'>
-				{term}
+				{props.term}
 			</div>
 			<div className ="card">
-				{def}
+				{props.def}
 			</div>
 		</div>
 	);
 	
 }
 export function CardSet(props){
-	const setId = useParams();
+	const params = useParams();
+	console.log(params);
+	console.log(params.setid);
+	const setId=params.setid;
+	const cSet = placeholdersets.sets.find(c=>(c.id=setId));
+	console.log(cSet);
+	console.log(cSet.cards);
+	{props.changetitle(cSet.title)};
 	return (
 		<div className = 'main'>
 			<div className = 'sidebar'>
@@ -32,9 +39,7 @@ export function CardSet(props){
 			<div className = 'pagespace spagespace'>
 				<div className = 'cardlist'>
 					<h1> Cards: </h1>
-					<CardPair term='ab' def='cd' />
-					<CardPair term='ij' def='kl' />
-					<CardPair term='ef' def='gh' />
+					{cSet.cards.map((c)=><CardPair term={c.term} def={c.def}/>)}
 				</div>
 			</div>
 		</div>

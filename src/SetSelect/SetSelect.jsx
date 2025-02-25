@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
-import placeholdersets from '../placeholdersets.json';
+import placeholdersets from '../setdata/placeholdersets.json';
 import '../app.css';
 function SetDisp(props){
 	return(
@@ -17,7 +17,6 @@ function SetDisp(props){
 }
 export function SetSelect() {
 	const setlist = placeholdersets.sets;
-	const idlist = ['a', 'b', 'c', 'd5', 'e','5102'];
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 
@@ -25,7 +24,7 @@ export function SetSelect() {
 			</div>
 			<div className = 'pagespace'>
 				<div className = 'setlist'>
-					{setlist.map((id)=><SetDisp set={id}/>)}
+					{setlist.map((s)=><SetDisp set={s}/>)}
 				</div>
 			</div>
 		</div>
