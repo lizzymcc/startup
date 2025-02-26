@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import placeholdersets from '../setdata/placeholdersets.json';
 import '../app.css';
 function SetDisp(props){
+	console.log(props);
 	return(
 		<div className = "setdisp">
 			<h3>
@@ -11,7 +12,7 @@ function SetDisp(props){
 					{props.set.title}
 				</NavLink>
 			</h3>
-			<p>[{props.set.cards.length}] cards - last studied mm/dd/yyyy</p>
+			<p>{props.set.cards.length} cards - id:{props.set.id} last studied mm/dd/yyyy</p>
 		</div>
 	)
 }

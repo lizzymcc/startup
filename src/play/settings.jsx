@@ -17,9 +17,9 @@ export function Settings(props){
 			</div>
 			<fieldset className = "settingsq">
 				<h4>Ask for:</h4>
-				<input type="radio" id="askT" name="qa" value={false} onChange={props.opt1(target.value)}/>
+				<input type="radio" id="askT" name="qa" value={false} onChange={(e)=>{props.opt1(e.target.value)}}/>
 				<label for="askT">term</label>
-				<input type="radio" checked= {props.opt1} id="askD" name="qa" value={true} onChange={props.opt1(target.value)}/>
+				<input type="radio" checked= {props.opt1} id="askD" name="qa" value={true} onChange={(e)=>{props.opt1(e.target.value)}}/>
 				<label for="askD">definition</label>
 			</fieldset>
 			<div className = "settingsq">

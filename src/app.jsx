@@ -7,6 +7,7 @@ import {EditSet} from './cardset/editset';
 import {Play} from './play/play';
 import {Scores} from './scores/scores';
 import {Login} from './login/login';
+import {Userbar} from './login/userbar'
 import { AuthState } from './login/authState';
 import './app.css';
 
@@ -57,10 +58,7 @@ export default function App() {
 					<div className= 'pagetitle'>
 						{pageTitle}
 					</div>
-					<div className='header-user'>
-						<button className= "btn btn-light btn-sm"  onClick={loginShow}>
-							Login
-					</button></div>
+					<Userbar authState={authState} lFunc={loginShow}/>
 				</header>
 					<Routes>
 						<Route path='/' element={<SetSelect />} exact />

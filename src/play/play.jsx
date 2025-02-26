@@ -8,10 +8,11 @@ import '../app.css';
 
 export function Play(){
 	const setId = useParams();
+	const [svis, setSvis]=React.useState(false); 
 	const [askForDef, setAskForDef] = React.useState(true);
 	return(
 		<div className = 'main'>
-		<Settings opt1 = {setAskForDef}/>
+		<Settings show={svis} opt1 = {setAskForDef} hideFunc={(e)=>{setSvis(false)}}/>
 		<div className = 'sidebar'>
 			<div className = "sidebartext score">
 				<p>words left: 3 of 12, time: 5:01, rank: 15</p>

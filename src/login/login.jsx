@@ -7,25 +7,28 @@ import '../app.css';
 
 export function Login(props){
 	function hideLogin(e) {
-		{props.hideFunc(false)}
+		{props.hideFunc(false)};
 	};
-	function loginNow(e) {
-		{props.authfunc(AuthState.Authenticated)};
-		hideLogin(e);
-	}
-	function logoutNow(e) {
-		{props.authfunc(AuthState.Unauthenticated)};
-		hideLogin(e);
-	}
-	function textChangeUname(e) {
-		{props.unamefunc(e.target.value)};
-	}
-	function LoginOverlay(props){
+
+	
+
+	const LoginOverlay = React.memo(
+	function LoginOverlay(){	
+		const [tuna, setTuna] = React.useState("");
+		const textChangeUname = React.useCallback((e) => {
+			setTuna(e.target.value);
+		  }, []);
+		function loginNow(e) {
+			{props.authfunc(AuthState.Authenticated)};
+			{props.unamefunc(tuna)};
+			localStorage.setItem('userName',tuna);
+			hideLogin(e);
+		}
 		return(
 			<form>
 				<div className ="loginline">
 					<label> username: </label>
-					<input type="text" value={props.uname} onChange={textChangeUname}/>
+					<input key="username_input" type="text" value={tuna} onChange={textChangeUname} pattern="[A-Za-z0-9]{,32}"/>
 				</div>
 				<div className ="loginline">
 					<label> password: </label>
@@ -37,18 +40,24 @@ export function Login(props){
 				</div>
 			</form>
 		);
-	}
-	function LogoutOverlay(props){
+	});
+	function LogoutOverlay(){
+		function logoutNow(e) {
+			{props.authfunc(AuthState.Unauthenticated)};
+			{props.unamefunc('')};
+			localStorage.setItem('userName',"");
+			hideLogin(e);
+		}
 		return(
 	
-					<div className ="loginform">
-						<div className="loginline">
-							You are already logged in as {props.userName}. Would you like to log out?
-						</div>
-						<div className ="loginline">
-							<button className ="btn btn-primary" onClick={logoutNow}> log out</button>
-						</div>
-					</div>
+			<div className ="loginform">
+				<div className="loginline">
+					You are already logged in as {props.uname}. Would you like to log out?
+				</div>
+				<div className ="loginline">
+					<button className ="btn btn-primary" onClick={logoutNow}> log out</button>
+				</div>
+			</div>
 		);
 	}
 	
