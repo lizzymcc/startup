@@ -10,17 +10,17 @@ export function Settings(props){
 				<div className = 'settingsform'>
 					<div className = 'overlaytitle'>
 						<div className ='backbutton'>
-							<a onclick = "document.getElementById('overlay').style.display = 'none'">
-								<img src = 'backbutton.png' alt="back" height="30px"/>
+							<a onClick = {props.hideFunc}>
+								<img src = '/backbutton.png' alt="back" height="30px"/>
 							</a>
 						</div>
 						<h2> Settings </h2>
 					</div>
 					<fieldset className = "settingsq">
 						<h4>Ask for:</h4>
-						<input type="radio" id="askT" name="qa" value={false} onChange={(e)=>{props.opt1(e.target.value)}}/>
+						<input type="radio" id="askT" name="qa" value={false} onChange={(e)=>props.opt1(e.target.value)}/>
 						<label for="askT">term</label>
-						<input type="radio" checked= {props.opt1} id="askD" name="qa" value={true} onChange={(e)=>{props.opt1(e.target.value)}}/>
+						<input type="radio" id="askD" name="qa" value={true} onChange={(e)=>{props.opt1(e.target.value)}}/>
 						<label for="askD">definition</label>
 					</fieldset>
 					<div className = "settingsq">
@@ -30,5 +30,8 @@ export function Settings(props){
 				</div>
 			</div>
 		);
+	}
+	else {
+		return null;
 	}
 }

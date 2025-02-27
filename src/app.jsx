@@ -36,6 +36,7 @@ export default function App() {
 	const [authState, setAuthState] = React.useState(currentAuthState);
 	const [loginDisp, setLoginDisp] = React.useState(false);
 	const [pageTitle, setPageTitle] = React.useState('Set select');
+	const [backTo, setBackTo] = React.useState("/");
 	function loginShow(e) {
 		if (!loginDisp){
 			setLoginDisp(true);
@@ -48,18 +49,14 @@ export default function App() {
 				<header>
 					<Routes>
 						<Route path='/' element={<EmptySpot />} exact />
-						<Route path='/cardset/:setid' element={<BackButton to= '/' />} />
-						<Route path='/cardset/edit/:setid' element={<BackButton to= '/cardset/:setid' />} />
-						<Route path='/play/:setid' element={<BackButton to= '/cardset/:setid' />} />
-						<Route path='/scores/:setid' element={<BackButton to= '/cardset/:setid' />} />
-						<Route path='*' element={<BackButton to='/' />} />
-						
+						<Route path='*' element={<BackButton to={backTo}/>} />
 					</Routes>
 					<div className= 'pagetitle'>
 						{pageTitle}
 					</div>
 					<Userbar authState={authState} lFunc={loginShow}/>
 				</header>
+				
 					<Routes>
 						<Route path='/' element={<SetSelect />} exact />
 						<Route path='/cardset/:setid' element={<CardSet  changetitle={setPageTitle}/>} />

@@ -12,7 +12,7 @@ export function PlaySidebar(props){
 			</div>
 			<SunsetNotifier show={true}/>
 			<div className = 'twobuttons'>
-				<button className ="btn btn-primary" onclick = {props.setbutton}>
+				<button className ="btn btn-primary" onClick ={props.setbutton}>
 					<img src="/gear.svg" alt="settings logo" height='15pc' />
 				</button>
 				<div className = 'restartbutton'>

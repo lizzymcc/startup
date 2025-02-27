@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route, NavLink, useParams} from 'react-router-do
 import '../app.css';
 
 
-export function PlayBox(props){
+export function PlayBox(props){ //props: ENDSCREEN: endscreen (bool),  onRestart, onClickScoresLink(?), time... we might just want to make the endscreen a different object. askfordef setting (bool), card, onSuccess, onFail,
+	const card = props.card;
 	/*if (props.endscreen) {
 		return(
 			<div className = 'playbox'>
@@ -27,7 +28,7 @@ export function PlayBox(props){
 		setTresp(e.target.value);
 	}
 	function checkResp(e){
-		if (checkMatch(tresp, (props.askForDef ? (props.def) : (props.term)))){
+		if (checkMatch(tresp, (props.askForDef ? (card.def) : (card.term)))){
 			setTresp('');
 			props.onSuccess();
 		} else {
@@ -43,7 +44,7 @@ export function PlayBox(props){
 	return(
 		<div className = 'playbox'>
 		<div> 
-			<h3> {props.askForDef ? (props.term) : (props.def)}</h3>
+			<h3> {props.askForDef ? (card.term) : (card.def)}</h3>
 		</div>
 		<div>
 			<input type="text" value ={tresp} className ="inputline" onChange={respChange} onKeyDown={checkEnter}/>

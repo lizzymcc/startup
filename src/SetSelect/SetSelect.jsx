@@ -21,7 +21,7 @@ export function SetSelect() {
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 
-				<NavLink to='/cardset/edit/5'><button className='btn btn-primary'>New Set</button></NavLink>
+				{/*<NavLink to='/cardset/edit/5'><button className='btn btn-primary'>New Set</button></NavLink>*/}
 			</div>
 			<div className = 'pagespace'>
 				<div className = 'setlist'>
