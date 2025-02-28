@@ -14,6 +14,8 @@ function CardPair({term, def}){
 	);
 }
 export function EditSet(){
+	props.spt("Edit set (possibly not gonna get used)");
+	props.sbt(`/cardset/${setId}`);
 	return (
 		<div className = 'main'>
 			<div className ="pagespace spagespace">		

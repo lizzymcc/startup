@@ -31,15 +31,24 @@ export function PlayBox(props){ //props: ENDSCREEN: endscreen (bool),  onRestart
 			document.getElementById("submit").click();
 		}
 	}
+	function Hint(){
+		if (props.showhint){
+		return(<div className="hint"> Try again! Correct answer: <span className="hint2"> {(props.askForDef ? (card.def) : (card.term))}</span>
+			</div>);
+		}
+	}
 	return(
-		<div className = 'playbox'>
-		<div> 
-			<h3> {props.askForDef ? (card.term) : (card.def)}</h3>
-		</div>
 		<div>
-			<input type="text" value ={tresp} className ="inputline" onChange={respChange} onKeyDown={checkEnter}/>
-			<button id="submit" className = "btn btn-primary" onClick={checkResp}>submit</button>
+			<div className = 'playbox'>
+				<div> 
+					<h3> {props.askForDef ? (card.term) : (card.def)}</h3>
+				</div>
+				<div>
+					<input type="text" value ={tresp} className ="inputline" onChange={respChange} onKeyDown={checkEnter}/>
+					<button id="submit" className = "btn btn-primary" onClick={checkResp}>submit</button>
+				</div>
+			</div>
+			<Hint />
 		</div>
-	</div>
 	);
 }

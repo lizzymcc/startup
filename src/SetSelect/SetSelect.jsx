@@ -16,8 +16,9 @@ function SetDisp(props){
 		</div>
 	)
 }
-export function SetSelect() {
+export function SetSelect(props) {
 	const setlist = placeholdersets.sets;
+	props.spt("Set Select")
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 

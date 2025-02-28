@@ -22,6 +22,7 @@ td,th{
 .personalscore{
 	border:5px goldenrod solid;
 	padding:20px;
+	padding-bottom:10px;
 	border-radius:10px;
 	text-align:center;
 	

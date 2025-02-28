@@ -12,7 +12,7 @@ export function PlaySidebar(props){
 				<p>words left: {props.cardsleft} of {props.totalcards}, 
 					time: {Math.floor(props.runtime/60)}:{String(Math.floor(props.runtime % 60)).padStart(2,0)}</p>
 			</div>
-			<SunsetNotifier show={true}/>
+			<SunsetNotifier show={props.sunv}/>
 			<div className = 'twobuttons'>
 				<button className ="btn btn-primary" onClick ={props.setbutton}>
 					<img src="/gear.svg" alt="settings logo" height='15pc' />

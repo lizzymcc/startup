@@ -56,14 +56,26 @@ export default function App() {
 					</div>
 					<Userbar authState={authState} lFunc={loginShow}/>
 				</header>
-				
+
 					<Routes>
-						<Route path='/' element={<SetSelect />} exact />
-						<Route path='/cardset/:setid' element={<CardSet  changetitle={setPageTitle}/>} />
-						<Route path='/cardset/edit/:setid' element={<EditSet />} />
-						<Route path='/play/:setid' element={<Play/>} />
-						<Route path='/scores/:setid' element={<Scores />} />
-						<Route path='*' element={<NotFound />} />
+						<Route path='/' element={
+							<SetSelect spt={setPageTitle} sbt={setBackTo}/>
+						} exact />
+						<Route path='/cardset/:setid' element={
+							<CardSet  spt={setPageTitle} sbt={setBackTo}/>
+						} />
+						<Route path='/cardset/edit/:setid' element={
+							<EditSet spt={setPageTitle} sbt={setBackTo} />
+						} />
+						<Route path='/play/:setid' element={
+							<Play spt={setPageTitle} sbt={setBackTo}/>
+						} />
+						<Route path='/scores/:setid' element={
+							<Scores spt={setPageTitle} sbt={setBackTo} />
+						} />
+						<Route path='*' element={
+							<NotFound spt={setPageTitle} sbt={setBackTo} />
+						} />
 					</Routes>
 				<footer> CS 260 project - Lizzy McClellan <a href = "https://github.com/lizzymcc/startup"> (GitHub)</a> </footer>
 			</div>

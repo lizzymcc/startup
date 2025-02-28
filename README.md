@@ -97,8 +97,8 @@ Login button and overlay have been moved to all pages though they are not yet fu
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - Yes, with the exception of the cardset editing/creation, which I'm thinking I'm not going to include in the final project unless I find I have extra time. It doesn't appear as an option in the website so the website is fully functional, even if it doesn't have some of the parts it could've.
+- [x] **Hooks** - so many hooks. I may have actually overused the usestates.
 
 ## 🚀 Service deliverable
 

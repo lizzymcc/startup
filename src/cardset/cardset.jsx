@@ -24,7 +24,8 @@ export function CardSet(props){
 	const params = useParams();
 	const setId=parseInt(params.setid);
 	const cSet = placeholdersets.sets.find(c=>(c.id===setId));
-	{props.changetitle(cSet.title)};	
+	props.spt(cSet.title);
+	props.sbt('/');
 	return (
 		<div className = 'main'>
 			<CardsetSidebar cSet={cSet} authState={props.authState}/>

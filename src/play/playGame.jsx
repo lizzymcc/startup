@@ -4,7 +4,7 @@ import placeholdersets from '../setdata/placeholdersets.json';
 import { BrowserRouter, Routes, Route, NavLink, useParams, useNavigate } from 'react-router-dom';
 import { PlayBox } from './playbox';
 
-export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, restartNote}){
+export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, restartNote, getTime, setScore}){
 	const [qc, setqc] = React.useState([]);
 	const [qcIndex, setqci] = React.useState(0);
 	const [rounds, setRounds] = React.useState(0);
@@ -33,11 +33,13 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 		setFailedLast(false);
 		resetTimer(()=>Date.now());
 		clearRuntime(0);
+		setScore(-1);
+
 
 	}
 	function onComplete(){
 		//let c = getTime();
-		
+		setScore(getTime);
 		console.log('complete!');
 
 		setComplete(true);
@@ -86,7 +88,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 		console.log('qc: ', qc, 'qcl: ', qc.length, 'qci: ', qcIndex)
 		return(
 			<div className = 'pagespace'>
-				<PlayBox card ={qc[qcIndex] || {"term": "error", "def": "oops"}} askForDef = {askForDef} onSuccess={succeed} onFail={(e)=>onFail()}/>
+				<PlayBox card ={qc[qcIndex] || {"term": "error", "def": "oops"}} askForDef = {askForDef} onSuccess={succeed} onFail={(e)=>onFail()} showhint={failedlast}/>
 			</div>
 
 		);

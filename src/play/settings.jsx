@@ -29,7 +29,7 @@ export function Settings(props){
 					</fieldset>
 					<div className = "settingsq">
 						<label for="sunsetOn">Allow sunrise/sunset notifications for your area?</label>
-						<input type="checkbox" id="sunsetOn" name="sunsetOn" className = "form-check-input"/>
+						<input type="checkbox" id="sunsetOn" name="sunsetOn" checked={props.sunv} className = "form-check-input" onChange={(e)=>{props.opt2(!props.sunv)}}/>
 					</div>
 				</div>
 			</div>
