@@ -19,7 +19,8 @@ function CardPair(props){
 	);
 	
 }
-export function CardSet(props){
+export function CardSet(props){	
+
 	const params = useParams();
 	const setId=parseInt(params.setid);
 	const cSet = placeholdersets.sets.find(c=>(c.id===setId));
@@ -32,7 +33,7 @@ export function CardSet(props){
 					<h1> Cards: </h1>
 					{cSet.cards.map((c)=><CardPair term={c.term} def={c.def}/>)}
 				</div>
-			</div>
+			</div> 
 		</div>
 	);
 }

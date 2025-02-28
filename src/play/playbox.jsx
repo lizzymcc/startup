@@ -5,25 +5,14 @@ import '../app.css';
 
 
 export function PlayBox(props){ //props: ENDSCREEN: endscreen (bool),  onRestart, onClickScoresLink(?), time... we might just want to make the endscreen a different object. askfordef setting (bool), card, onSuccess, onFail,
+
 	const card = props.card;
-	/*if (props.endscreen) {
-		return(
-			<div className = 'playbox'>
-			<div> 
-				<h3> Set complete!</h3>
-			</div>
-			<div>
-				Your time: [to be included]
-				<button className = "btn btn-primary" onClick={}>submit</button>
-			</div>
-		</div>
-		);
-	}*/
 	function checkMatch(string1, goal){
 		return (string1.toUpperCase() === goal.toUpperCase()); //ignore case
 				//other things we might want to add later: ignore punctuation? Ignore things in brackets? for now we'll just do this
 	}
 	const [tresp, setTresp] = React.useState('');
+	const [isRetaking, setIR] = React.useState(false);
 	function respChange(e) {
 		setTresp(e.target.value);
 	}
@@ -37,8 +26,9 @@ export function PlayBox(props){ //props: ENDSCREEN: endscreen (bool),  onRestart
 		}
 	}
 	function checkEnter(e){
+		console.log("key pressed: ", e.key);
 		if (e.key === "Enter"){
-			document.getElementById("submit").click;
+			document.getElementById("submit").click();
 		}
 	}
 	return(

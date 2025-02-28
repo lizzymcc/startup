@@ -4,6 +4,10 @@ import { BrowserRouter, Routes, Route, NavLink, useParams} from 'react-router-do
 
 import '../app.css';
 export function Settings(props){
+	function updateAfd (e) {
+		console.log(e.target.value);
+		props.opt1((e.target.value > 0));
+	}
 	if (props.show){
 		return(
 			<div id="overlay">				
@@ -18,9 +22,9 @@ export function Settings(props){
 					</div>
 					<fieldset className = "settingsq">
 						<h4>Ask for:</h4>
-						<input type="radio" id="askT" name="qa" value={false} onChange={(e)=>props.opt1(e.target.value)}/>
+						<input type="radio" id="askT" name="qa" checked={!props.afd} value={0} onChange={updateAfd} />
 						<label for="askT">term</label>
-						<input type="radio" id="askD" name="qa" value={true} onChange={(e)=>{props.opt1(e.target.value)}}/>
+						<input type="radio" id="askD" name="qa" checked={props.afd} value={1} onChange={updateAfd}/>
 						<label for="askD">definition</label>
 					</fieldset>
 					<div className = "settingsq">

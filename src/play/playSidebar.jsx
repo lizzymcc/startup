@@ -5,10 +5,12 @@ import { Settings } from './settings';
 import { SunsetNotifier } from './sunsetNotifier';
 import '../app.css';
 export function PlaySidebar(props){
+	console.log("sidebar runtime: ", props.runtime);
 	return(
 		<div className = 'sidebar'>
 			<div className = "sidebartext score">
-				<p>words left: 3 of 12, time: 5:01, rank: 15</p>
+				<p>words left: {props.cardsleft} of {props.totalcards}, 
+					time: {Math.floor(props.runtime/60)}:{String(Math.floor(props.runtime % 60)).padStart(2,0)}</p>
 			</div>
 			<SunsetNotifier show={true}/>
 			<div className = 'twobuttons'>
@@ -16,7 +18,7 @@ export function PlaySidebar(props){
 					<img src="/gear.svg" alt="settings logo" height='15pc' />
 				</button>
 				<div className = 'restartbutton'>
-					<button className ="btn btn-primary">restart</button>
+					<button className ="btn btn-primary" onClick ={props.rsbtn}>restart</button>
 				</div>
 			</div>				
 		</div>
