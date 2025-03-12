@@ -1,0 +1,53 @@
+{
+	"scores": [
+		{
+			"setid":5038,
+			"highscores":[
+				{
+					"player": "player1",
+					"seconds":5
+				},
+				{
+					"player": "player4",
+					"seconds":8
+				},				{
+					"player": "player3",
+					"seconds":6
+				}
+			]
+		},
+		{
+			"setid":5039,
+			"highscores":[
+				{
+					"player": "player1",
+					"seconds":5
+				},
+				{
+					"player": "player4",
+					"seconds":8
+				},				{
+					"player": "player2",
+					"seconds":6
+				}
+			]
+		},
+		{
+			"setid":5030,
+			"highscores":[
+				{
+					"player": "player1",
+					"seconds":5
+				},
+				{
+					"player": "player4",
+					"seconds":8
+				},				{
+					"player": "player5",
+					"seconds":6
+				}
+			]
+		}
+	]
+
+}

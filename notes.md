@@ -71,3 +71,11 @@ it returns... the inital value (that it had as a parameter) and a function that 
 
 ok so what is an effect hook...
 useState is a hook, and useEffect is a hook... I feel like I'm missing some information. Like what the difference is between a state & effect, and how you would access them outside of hooks. and how they relate to needing an object or class or something.
+
+----
+use `npm install` from the root directory to turn the packages.json etc into node_modules! *Once those are in* you can run `npm run dev` with vite. if that's in the packages/node modules ofc.
+
+---
+hm. I've been installing npm things in the service folder but it's not creating new package.json files, it's adding to the ones in the surrounding folder. that's... probably okay? NOPE IT'S NOT
+
+We need to use `npm init -y` to set up the packages to start
