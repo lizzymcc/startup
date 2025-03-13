@@ -156,17 +156,19 @@ apiRouter.post('/scores/me', async (req, res) => { //ofc in the full version we 
 apiRouter.put('/scores', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
-	const scoreindex = await getScoresIndex(req.body.setid)
+	const s=req.body.seconds;
+	const scoreindex = await getScoresIndex(req.body.setid);
 	if (user && scoreindex > -1 && scoredata[scoreindex].highscores){
-		const score = await getScore(user.uname, req.body.setid);
+		const u = user.uname;
+		const score = await getScore(u, req.body.setid);
 		if (score){
-			if (score.seconds < req.body.seconds){
-				scoredata[scoreindex].highscores.find((d)=>(d.player === user.uname)).seconds = req.body.seconds;
+			if (score.seconds > s){
+				scoredata[scoreindex].highscores.find((d)=>(d.player === u)).seconds = s;
 			}
 		} else {
-			scoredata[scoreindex].highscores.push({user:user.uname, seconds:req.body.seconds});
+			scoredata[scoreindex].highscores.push({player:u, seconds:s});
 		}
-		res.send(getScore(user.uname, req.body.setid));
+		res.send(getScore(u, req.body.setid));
 	} else {
 		res.status(401).send({msg: "cannot add a score without a username"});
 

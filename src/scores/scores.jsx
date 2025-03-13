@@ -24,14 +24,14 @@ async function getScores(setId){
 	  }
 	);
 	if (response?.status === 200) {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const respobj = await response.json();
-		console.log("respobj: ", respobj);
+		//console.log("respobj: ", respobj);
 		return respobj.highscores;
 	} else {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const body = await response.json();
-		console.log(`Error: ${body.msg}`);
+		//console.log(`Error: ${body.msg}`);
 		return [];
 	}
 }
@@ -45,12 +45,14 @@ async function getPersonalScore(setId){
 	  }
 	);
 	if (response?.status === 200) {
+		//console.log("response: ", response);
 		const respobj = await response.json();
-		console.log("personal score respobj: ", respobj);
+		//console.log("personal score respobj: ", respobj);
 		return respobj;
 	} else {
+		//console.log("response: ", response);
 		const body = await response.json();
-		console.log(`Error: ${body.msg}`);
+		//console.log(`Error: ${body.msg}`);
 		return null;
 	}
 }
@@ -66,7 +68,7 @@ export function Scores(props){
 	async function setUpScores(){
 		//let cScores = placeholderscores.scores.find(c=>(c.setid===setId)).highscores;
 		let cScores = await getScores(setId);
-		console.log("cScores: ", cScores);
+		//console.log("cScores: ", cScores);
 		let personalScore = await getPersonalScore(setId);
 		let scoreList = [];
 		cScores.sort((a,b)=>(parseFloat(a.seconds)-parseFloat(b.seconds)));

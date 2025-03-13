@@ -38,10 +38,12 @@ async function addScore(id,seconds){
 	  }
 	);
 	if (response?.status === 200) {
+		console.log("response: ", response);
 		const respobj = await response.json();
 		console.log("high score updated!");
 		return respobj;
 	} else {
+		console.log("response: ", response);
 		const body = await response.json();
 		console.log(`Error: ${body.msg}`);
 	}

@@ -39,7 +39,7 @@ export function SetSelect(props) {
 	const [errmsg, setMessage] = React.useState('no errors yet...');
 	const [setlist, setSetlist] = React.useState([]);
 	async function getlistworking(){
-		props.setSetlist(await getSets(setMessage));
+		setSetlist(await getSets(setMessage));
 	};
 	getlistworking();
 	return(
@@ -49,7 +49,7 @@ export function SetSelect(props) {
 				{/*<NavLink to='/cardset/edit/5'><button className='btn btn-primary'>New Set</button></NavLink>*/}
 			</div>
 			<div className = 'setlist'>
-				{sl.map((s)=><SetDisp set={s}/>)}
+				{setlist.map((s)=><SetDisp set={s}/>)}
 			</div>
 		</div>
 	);
