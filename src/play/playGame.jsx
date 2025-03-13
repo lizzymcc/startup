@@ -4,7 +4,7 @@ import placeholdersets from '../setdata/placeholdersets.json';
 import { BrowserRouter, Routes, Route, NavLink, useParams, useNavigate } from 'react-router-dom';
 import { PlayBox } from './playbox';
 
-export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, restartNote, getTime, setScore}){
+export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, restartNote, getTime, setScore, updateTot}){
 	const [qc, setqc] = React.useState([]);
 	const [qcIndex, setqci] = React.useState(0);
 	const [rounds, setRounds] = React.useState(0);
@@ -24,7 +24,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 		onReStart();
 	},[]);
 
-	React.useEffect(onReStart, [askForDef, restartNote]);
+	React.useEffect(onReStart, [askForDef, restartNote, cSet.id]);
 	function onReStart(){
 		setqc(cSet.cards.sort( () => Math.random() - 0.5));
 		setqci(0);
@@ -34,6 +34,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 		resetTimer(()=>Date.now());
 		clearRuntime(0);
 		setScore(-1);
+		updateTot(cSet.cards.length);
 
 
 	}

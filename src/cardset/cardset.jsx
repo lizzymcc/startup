@@ -30,13 +30,10 @@ async function getSet(id,errm){
 	  }
 	);
     if (response?.status === 200) {
-		console.log("response: ", response);
 		const respobj = await response.json();
-		console.log("response object: ", respobj);
 		errm('Cards:');
 		return respobj;
     } else {
-		console.log("response: ", response);
 		const body = await response.json();
 		errm(`Error: ${body.msg}`);
 		return(new FlashcardSet(setId))
@@ -46,7 +43,6 @@ export function CardSet(props){
 
 	const params = useParams();
 	const setId=parseInt(params.setid);
-	//const cSet = placeholdersets.sets.find(c=>(c.id===setId));
 	const [cSet, setcSet] = React.useState(new FlashcardSet(setId)); 
 	const [wTitle, setWTitle] = React.useState('Loading...');
 	async function setupSet(){
