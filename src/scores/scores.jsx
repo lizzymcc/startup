@@ -14,37 +14,76 @@ function ScoreRow(props = {place:'0', user:'loading',time:'0:00'}){
 		</tr>
 	);
 }
-
-
+async function getScores(setId){
+	const response = await fetch('/api/scores',{
+		method: 'post',
+		body: JSON.stringify({setid: setId}),
+		headers: {
+		  'Content-type': 'application/json; charset=UTF-8',
+		},
+	  }
+	);
+	if (response?.status === 200) {
+		console.log("response: ", response);
+		const respobj = await response.json();
+		console.log("respobj: ", respobj);
+		return respobj.highscores;
+	} else {
+		console.log("response: ", response);
+		const body = await response.json();
+		console.log(`Error: ${body.msg}`);
+		return [];
+	}
+}
+async function getPersonalScore(setId){
+	const response = await fetch('/api/scores/me',{
+		method: 'post',
+		body: JSON.stringify({setid: setId}),
+		headers: {
+		  'Content-type': 'application/json; charset=UTF-8',
+		},
+	  }
+	);
+	if (response?.status === 200) {
+		const respobj = await response.json();
+		console.log("personal score respobj: ", respobj);
+		return respobj;
+	} else {
+		const body = await response.json();
+		console.log(`Error: ${body.msg}`);
+		return null;
+	}
+}
 export function Scores(props){
 
 	const params=useParams();
 	const setId=parseInt(params.setid);
-	let uname =(localStorage.getItem("userName") || '');
-	let hs = (parseFloat(localStorage.getItem(`${uname} hs ${setId}`)) || -1);
-	function setUpScores({uname, hs}){
-		let cScores = placeholderscores.scores.find(c=>(c.setid===setId)).highscores;
+	props.spt("High Scores");
+	props.sbt(`/cardset/${setId}`);
+	const [hs, setHs] = React.useState(null);
+
+	const [slist, setSlist] = React.useState([])
+	async function setUpScores(){
+		//let cScores = placeholderscores.scores.find(c=>(c.setid===setId)).highscores;
+		let cScores = await getScores(setId);
+		console.log("cScores: ", cScores);
+		let personalScore = await getPersonalScore(setId);
 		let scoreList = [];
-		if (!(uname === '') && hs >-1){
-			cScores.push({player: uname, seconds: hs});	//for some reason this keeps putting two of them in the score  list. not sure if that's a bug but it's something we'll change when we get to database stuff anyway so :shrug: 	
-		}
 		cScores.sort((a,b)=>(parseFloat(a.seconds)-parseFloat(b.seconds)));
-		console.log(cScores);
+		//console.log(cScores);
 	
-		console.log(scoreList);	
-		props.spt("High Scores");
-		props.sbt(`/cardset/${setId}`);
+		//console.log(scoreList);	
 		for (let i=0; i<cScores.length && i<10; i++) {
 			let t=cScores[i].seconds;
 			scoreList.push({place:(i + 1), user:cScores[i].player, time:`${Math.floor(t/60)}:${String(Math.floor(t % 60)).padStart(2,0)}`});
 		};
-		return scoreList;
+		setSlist(scoreList);
+		setHs(personalScore);
 	}
-	const [slist, setSlist] = React.useState(setUpScores({uname,hs}))
-	
+	setUpScores();
 
 	function PersonalScore(){
-		if (!(uname === '') && hs >-1){
+		if (hs){
 			return(
 				<div className ="personalscore">
 					<h2>Your top score: <span className ='scorenumber'>
@@ -60,13 +99,17 @@ export function Scores(props){
 			<div className ="pagespace scorespace">	
 				<PersonalScore />	
 				<table>
+					<thead>
 					<tr>
 						<th>place
 						</th>
 						<th> user</th>
 						<th> time</th>
 					</tr>
+					</thead>
+					<tbody>
 					{slist.map((r)=> <ScoreRow place={r.place} user={r.user} time={r.time}/>)}
+					</tbody>
 				</table>
 
 			</div>

@@ -109,19 +109,69 @@ function getVisibleSets(uname){
 function gsbi(sid){
 	return sets.findIndex((c)=>(c.id===sid));
 }
-
+function getScoresIndex(sid){
+	return scoredata.findIndex((c)=>(c.setid===sid));
+}
 //SCORES: /api/scores
 //get high scores from a cardset
-//GET /api/scores (request body includes cardset id)
+//POST /api/scores (request body includes cardset id)\
+apiRouter.post('/scores', async (req, res) => { 
+	const scores = scoredata[getScoresIndex(req.body.setid)];
+	if (scores){
+		res.send(scores);
+	} else {
+		res.status(400).send({msg: "no scores for this cardset"});
+	}
+  });
 
+
+
+function getScore(uname, sid){
+	let c = scoredata[getScoresIndex(sid)];
+	if (c){
+		return c.highscores.find((d)=>(d.player === uname)) || null;
+	} else {
+		return null;
+	}
+}
 //get user's score for a cardset (or if they don't have one)
-//GET /api/scores/me (request body includes cardset id)
+//POST /api/scores/me (request body includes cardset id)
+apiRouter.post('/scores/me', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
+	const token = req.cookies['token'];
+	const user = await getUser('token', token);
+	if (user) {
+		const score = await getScore(user.uname, req.body.setid);
+		if (score){
+			res.send(score);
+		} else {
+			res.status(400).send({msg: "no user score for this cardset"});
+		}
+	} else {
+		res.status(401).send({msg: "cannot add a score without a username"});
+	}
+  });
 
-//add new score for a user
-//POST /api/scores
+//add or update user's high score
+//PUT /api/scores (request body includes cardset id ) -- if 
+apiRouter.put('/scores', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
+	const token = req.cookies['token'];
+	const user = await getUser('token', token);
+	const scoreindex = await getScoresIndex(req.body.setid)
+	if (user && scoreindex > -1 && scoredata[scoreindex].highscores){
+		const score = await getScore(user.uname, req.body.setid);
+		if (score){
+			if (score.seconds < req.body.seconds){
+				scoredata[scoreindex].highscores.find((d)=>(d.player === user.uname)).seconds = req.body.seconds;
+			}
+		} else {
+			scoredata[scoreindex].highscores.push({user:user.uname, seconds:req.body.seconds});
+		}
+		res.send(getScore(user.uname, req.body.setid));
+	} else {
+		res.status(401).send({msg: "cannot add a score without a username"});
 
-//update user's high score
-//PUT /api/scores (request body includes cardset id & user id) -- if 
+	}
+  });
 
 
 
@@ -148,7 +198,12 @@ function addSet(cards, isprivate, title, uname){
 		privateset: isprivate, 
 		cards: cards,
 	};
+	const newscores = {
+		setid:newid,
+		highscores:[],
+	};
 	sets.push(newset);
+	scoredata.push(newscores);
 	return newset;
 }
 //get cards for a given cardset ID (?) actually just get all the set info, only the cards is kinda useless

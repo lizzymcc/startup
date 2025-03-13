@@ -20,7 +20,7 @@ async function getSet(id,errm){
 	);
 	if (response?.status === 200) {
 		const respobj = await response.json();
-		errm('Cards:');
+		errm(null);
 		return respobj;
 	} else {
 		const body = await response.json();
@@ -28,9 +28,27 @@ async function getSet(id,errm){
 		return(new FlashcardSet(setId))
 	}
 }
+async function addScore(id,seconds){
+	const response = await fetch('/api/scores',{
+		method: 'put',
+		body: JSON.stringify({setid: id, seconds: seconds}),
+		headers: {
+		  'Content-type': 'application/json; charset=UTF-8',
+		},
+	  }
+	);
+	if (response?.status === 200) {
+		const respobj = await response.json();
+		console.log("high score updated!");
+		return respobj;
+	} else {
+		const body = await response.json();
+		console.log(`Error: ${body.msg}`);
+	}
+}
 
 function PlayIsolater(props){
-	console.log("props: ", props);
+	//console.log("props: ", props);
 	//console.log(props.cSet.cards.length);
 	const [svis, setSvis]=React.useState(false); //settings visibility
 	const [askForDef, setAskForDef] = React.useState(true); //settings
@@ -43,15 +61,22 @@ function PlayIsolater(props){
 	const [starttime, setStartTime] = React.useState(Date.now());
 	const [runtime, setTime] = React.useState(0);
 	const [restartNote, setRN] = React.useState(true);
-	const [score, setScore] = React.useState(0);
+	const [score, setScore] = React.useState(-1);
 	React.useEffect(() => {
 		if (score > -1){
-			let hs = (parseInt(localStorage.getItem(`${props.uname} hs ${props.cSet.id}`)) || score+1);
+			addScore(props.cSet.id,score);
+			/*let hs = (parseInt(localStorage.getItem(`${props.uname} hs ${props.cSet.id}`)) || score+1);
 			if (hs > score){
+
 				localStorage.setItem(`${props.uname} hs ${props.cSet.id}`,score);
-			}
+			}*/
 		}
 	},[score]);
+	if (props.errm){
+		return(		<div className = 'main'>
+<h1>{props.errm}</h1>
+</div>);
+	}
 	return(
 		<div className = 'main'>
 			<Timer updateTime={setTime} startTime={starttime}/>
@@ -70,14 +95,15 @@ export function Play(props){
 	const [uname, setUserName] = React.useState(localStorage.getItem('userName') || '');
 	const params = useParams();
 	const setId=parseInt(params.setid);
-	const [cSet, setcset] = React.useState(new FlashcardSet(0));
+	const [errm, seterrm] = React.useState("Loading...");
+	const [cSet, setcset] = React.useState(new FlashcardSet(0,'','',false,[{term:errm, def:errm}]));
 	async function setupCset(){
-		setcset(await getSet(setId,(e)=>console.log(e)));
+		setcset(await getSet(setId,seterrm));
 	}
 	setupCset();
-	console.log("cset in outer function: ", cSet);
+	//console.log("cset in outer function: ", cSet);
 	props.spt("Practice");
 	props.sbt(`/cardset/${setId}`);
 
-	return (<PlayIsolater cSet={cSet} uname={uname}/>);
+	return (<PlayIsolater cSet={cSet} uname={uname} errm={errm}/>);
 }

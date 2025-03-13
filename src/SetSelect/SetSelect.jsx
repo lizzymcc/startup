@@ -32,12 +32,14 @@ async function getSets(errm){
    //return placeholdersets.sets;
 
 }
+
+
 export function SetSelect(props) {
 	props.spt("Set Select");
 	const [errmsg, setMessage] = React.useState('no errors yet...');
 	const [setlist, setSetlist] = React.useState([]);
 	async function getlistworking(){
-		setSetlist(await getSets(setMessage));
+		props.setSetlist(await getSets(setMessage));
 	};
 	getlistworking();
 	return(
@@ -46,10 +48,8 @@ export function SetSelect(props) {
 				{errmsg}
 				{/*<NavLink to='/cardset/edit/5'><button className='btn btn-primary'>New Set</button></NavLink>*/}
 			</div>
-			<div className = 'pagespace'>
-				<div className = 'setlist'>
-					{setlist.map((s)=><SetDisp set={s}/>)}
-				</div>
+			<div className = 'setlist'>
+				{sl.map((s)=><SetDisp set={s}/>)}
 			</div>
 		</div>
 	);
