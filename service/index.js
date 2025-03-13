@@ -151,14 +151,18 @@ function addSet(cards, isprivate, title, uname){
 	sets.push(newset);
 	return newset;
 }
-//get cards for a given cardset ID (?) actually just get all the set info, only the cards is kins useless
-//GET /api/sets (request body includes cardset id)
-apiRouter.get('/sets', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
+//get cards for a given cardset ID (?) actually just get all the set info, only the cards is kinda useless
+//POST /api/set (the set vs sets is the thing that distinguishes this from the set creation which feels. unideal but we'll see)
+apiRouter.post('/set', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	const setgot = sets[gsbi(req.body.setid)];
 	if (setgot){
-		res.send(setgot);
+		if (!setgot.privateset || (user && user.uname === setgot.creating_user)){
+			res.send(setgot);
+		} else {
+			res.status(401).send({msg: "not authorized to access this cardset\n(how did you even get here)"});
+		}
 	} else {
 		res.status(400).send({msg: "card set does not exist"});
 	}
@@ -182,7 +186,7 @@ apiRouter.get('/sets', async (req, res) => { //ofc in the full version we want t
 
 	
 	//edit cardset 
-	//PUT /api/sets/mpub (request body includes cardset id), PUT /api/sets/mpriv
+	//PUT /api/sets (request body includes cardset id), PUT /api/sets
 	apiRouter.put('/sets', async (req, res) => {
 		const token = req.cookies['token'];
 		const user = await getUser('token', token);

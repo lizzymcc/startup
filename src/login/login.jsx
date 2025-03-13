@@ -25,7 +25,7 @@ export function Login(props){
 		  }, []);
 
 		  async function logSignNow(m, e){
-			console.log((m ? 'login' : 'signup'), `attempt with username ${tuna}, password ${tp}`);
+			//console.log((m ? 'login' : 'signup'), `attempt with username ${tuna}, password ${tp}`);
 			const response = await fetch('/api/auth', {
 				method: (m ? 'put' : 'post'),
 				body: JSON.stringify({ uname: tuna, password: tp }),
@@ -34,13 +34,13 @@ export function Login(props){
 				},
 			  });
 			  if (response?.status === 200) {
-				console.log("response: ", response);
+				//console.log("response: ", response);
 				{props.authfunc(AuthState.Authenticated)};
 				{props.unamefunc(tuna)};
 				localStorage.setItem('userName',tuna);
 				hideLogin(e);
 			  } else {
-				console.log("response: ", response);
+				//console.log("response: ", response);
 				const body = await response.json();
 				setError(`Error: ${body.msg}`);
 			  }

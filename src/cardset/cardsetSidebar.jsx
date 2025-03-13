@@ -18,7 +18,7 @@ export function CardsetSidebar(props){
 			<NavLink to= {`/play/${setId}`} > <button className ='btn btn-primary'>play</button> </NavLink>
 			{isOwner ? (<NavLink to = {`/cardset/edit/${setId}`}><button className ="btn btn-primary">edit cards</button></NavLink>) : (null)}
 			{false ? (<NavLink to = '/cardset/edit/6'><button className ="btn btn-primary">copy set</button></NavLink>) : (null)}
-			<NavLink to={`/scores/${setId}`}><button className ="btn btn-primary">high scores</button></NavLink>
+			{props.cSet.privateset? (null) : (<NavLink to={`/scores/${setId}`}><button className ="btn btn-primary">high scores</button></NavLink>)}
 
 		</div>
 	);
