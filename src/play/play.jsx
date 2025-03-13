@@ -16,14 +16,14 @@ export function Play(props){
 	const setId=parseInt(params.setid);
 	const cSet = placeholdersets.sets.find(c=>(c.id===setId));
 
-	console.log(cSet.cards.length);
+	//console.log(cSet.cards.length);
 	const [svis, setSvis]=React.useState(false); //settings visibility
 	const [askForDef, setAskForDef] = React.useState(true); //settings
 	const [sunvis, setSunvis]=React.useState(false);
 
 	props.spt("Practice");
 	props.sbt(`/cardset/${setId}`);
-	console.log(cSet.cards);
+	//console.log(cSet.cards);
 
 	const [totalCards, setCardNum] = React.useState(cSet.cards.length || 0);
 	const [cardsLeft, setCardsLeft] = React.useState(totalCards);

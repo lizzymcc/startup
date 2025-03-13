@@ -7,14 +7,17 @@ const express = require('express');
 const app = express();
 
 const bcrypt = require('bcryptjs');
-
-const users = [];
 const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 
+app.use(express.static('public'));
+app.use(express.json());
+const users = [];
 
+let apiRouter = express.Router();
+app.use(`/api`, apiRouter);
 //endpoints:
 
 //LOGIN/USERS: /api/auth, /api/user
@@ -47,9 +50,8 @@ function getUser(field, value) {
   }
   return null;
 }
-app.use(express.json());
 // registration
-app.post('/api/auth', async (req, res) => {
+apiRouter.post('/auth', async (req, res) => {
   if (await getUser('uname', req.body.uname)) {
 	res.status(409).send({msg: 'Existing user'});
   } else {
@@ -59,18 +61,17 @@ app.post('/api/auth', async (req, res) => {
   }
 });
 // login
-app.put('/api/auth', async (req, res) => {
+apiRouter.put('/auth', async (req, res) => {
 	const user = await getUser('uname', req.body.uname);
 	if (user && (await bcrypt.compare(req.body.password, user.password))) {
 	  setAuthCookie(res, user);
-  
 	  res.send({ uname: user.uname });
 	} else {
 	  res.status(401).send({ msg: 'Unauthorized' });
 	}
   });
 // logout
-app.delete('/api/auth', async (req, res) => {
+apiRouter.delete('/auth', async (req, res) => {
   const token = req.cookies['token'];
   const user = await getUser('token', token);
   if (user) {
@@ -86,7 +87,7 @@ function clearAuthCookie(res, user) {
 }
 
 // getMe
-app.get('/api/user/me', async (req, res) => {
+apiRouter.get('/user/me', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	if (user) {
@@ -129,17 +130,15 @@ function gsbi(sid){
 
 //get cardsets that the current user can see (public cardsets + private cardsets whose username matches the user):
 //GET /api/sets/visible (request body(?) includes user id or lack thereof)
-app.get('/api/sets/visible', async (req, res) => {
+apiRouter.get('/sets/visible', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	if (user) {
-	  res.send(getVisibleSets(user.uname));
+	  res.send({sets: getVisibleSets(user.uname)});
 	} else {
-	  res.send(getPublicSets());
+	  res.send({sets: getPublicSets()});
 	}
   });
-
-
 function addSet(cards, isprivate, title, uname){
 	let newid = Math.max(sets.map((i)=>(i.id))) + 1;
 	const newset = {
@@ -152,23 +151,23 @@ function addSet(cards, isprivate, title, uname){
 	sets.push(newset);
 	return newset;
 }
-//get cards for a given cardset ID (?)
-//GET /api/cards (request body includes cardset id)
-app.get('/api/cards', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
+//get cards for a given cardset ID (?) actually just get all the set info, only the cards is kins useless
+//GET /api/sets (request body includes cardset id)
+apiRouter.get('/sets', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	const setgot = sets[gsbi(req.body.setid)];
 	if (setgot){
-		res.send(setgot.cards);
+		res.send(setgot);
 	} else {
 		res.status(400).send({msg: "card set does not exist"});
 	}
-  });
+  }); //ok this is less of a priority than...
 	//IF DOING EDITING/ADDING FROM THE USER END: (all of the edits will require a verification that the user is the owner)
 
 	//create new cardset (initialization data is in the body of the set)
 	//POST /api/sets
-	app.post('/api/sets', async (req, res) => {
+	apiRouter.post('/sets', async (req, res) => {
 		const token = req.cookies['token'];
 		const user = await getUser('token', token);
 		const cards = req.body.cards;
@@ -184,7 +183,7 @@ app.get('/api/cards', async (req, res) => { //ofc in the full version we want to
 	
 	//edit cardset 
 	//PUT /api/sets/mpub (request body includes cardset id), PUT /api/sets/mpriv
-	app.put('/api/sets', async (req, res) => {
+	apiRouter.put('/sets', async (req, res) => {
 		const token = req.cookies['token'];
 		const user = await getUser('token', token);
 		const setnum = gsbi(req.body.setid);
@@ -208,7 +207,7 @@ app.get('/api/cards', async (req, res) => { //ofc in the full version we want to
 	  });
 
 	//remove cardset
-	app.delete('/api/sets', async (req, res) => {
+	apiRouter.delete('/sets', async (req, res) => {
 		const token = req.cookies['token'];
 		const user = await getUser('token', token);
 		const setnum = gsbi(req.body.setid);
@@ -225,5 +224,16 @@ app.get('/api/cards', async (req, res) => { //ofc in the full version we want to
 		}
 	  });
 
+// Middleware to verify that the user is authorized to call an endpoint
+const verifyAuth = async (req, res, next) => {
+	const user = await findUser('token', req.cookies[authCookieName]);
+	if (user) {
+	  next();
+	} else {
+	  res.status(401).send({ msg: 'Unauthorized' });
+	}
+  };
 
-app.listen(4000);
+app.listen(port, () => {
+	console.log(`Listening on port ${port}`);
+});

@@ -15,28 +15,60 @@ export function Login(props){
 	const LoginOverlay = React.memo(
 	function LoginOverlay(){	
 		const [tuna, setTuna] = React.useState("");
+		const [tp, setTp] = React.useState("");
+		const [error, setError] = React.useState("");
 		const textChangeUname = React.useCallback((e) => {
 			setTuna(e.target.value);
 		  }, []);
-		function loginNow(e) {
-			{props.authfunc(AuthState.Authenticated)};
-			{props.unamefunc(tuna)};
-			localStorage.setItem('userName',tuna);
-			hideLogin(e);
+		  const textChangePword = React.useCallback((e) => {
+			setTp(e.target.value);
+		  }, []);
+
+		  async function logSignNow(m, e){
+			console.log((m ? 'login' : 'signup'), `attempt with username ${tuna}, password ${tp}`);
+			const response = await fetch('/api/auth', {
+				method: (m ? 'put' : 'post'),
+				body: JSON.stringify({ uname: tuna, password: tp }),
+				headers: {
+				  'Content-type': 'application/json; charset=UTF-8',
+				},
+			  });
+			  if (response?.status === 200) {
+				console.log("response: ", response);
+				{props.authfunc(AuthState.Authenticated)};
+				{props.unamefunc(tuna)};
+				localStorage.setItem('userName',tuna);
+				hideLogin(e);
+			  } else {
+				console.log("response: ", response);
+				const body = await response.json();
+				setError(`Error: ${body.msg}`);
+			  }
+
+		}
+
+		async function loginNow(e) {
+			e.preventDefault();
+			logSignNow(true, e);
+		}
+		function signupNow(e) {
+			e.preventDefault();
+			logSignNow(false, e);
 		}
 		return(
 			<form>
 				<div className ="loginline">
 					<label> username: </label>
-					<input key="username_input" type="text" value={tuna} onChange={textChangeUname} pattern="[A-Za-z0-9]{,32}"/>
+					<input key="username_input" type="text" value={tuna} onChange={textChangeUname} pattern="[A-Za-z0-9]{0,32}"/>
 				</div>
 				<div className ="loginline">
 					<label> password: </label>
-					<input type="password" id="pword" />
+					<input type="password" id="pword" value={tp} onChange={textChangePword}/>
 				</div>
 				<div className ="loginline">
 					<button className ="btn btn-primary" onClick = {loginNow}> log in</button>
-					<button className ="btn btn-primary" onClick = {loginNow}>create new account</button>
+					<button className ="btn btn-primary" onClick = {signupNow}>create new account</button>
+					<span className="error">{error}</span>
 				</div>
 			</form>
 		);

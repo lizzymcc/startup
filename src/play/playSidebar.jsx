@@ -5,7 +5,7 @@ import { Settings } from './settings';
 import { SunsetNotifier } from './sunsetNotifier';
 import '../app.css';
 export function PlaySidebar(props){
-	console.log("sidebar runtime: ", props.runtime);
+	//console.log("sidebar runtime: ", props.runtime);
 	return(
 		<div className = 'sidebar'>
 			<div className = "sidebartext score">

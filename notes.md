@@ -79,3 +79,5 @@ use `npm install` from the root directory to turn the packages.json etc into nod
 hm. I've been installing npm things in the service folder but it's not creating new package.json files, it's adding to the ones in the surrounding folder. that's... probably okay? NOPE IT'S NOT
 
 We need to use `npm init -y` to set up the packages to start
+
+13 mar 2025 -- ngl i am so lost right now. Something isn't working with the server and the front end connecting and I'm not sure where the problem is bc it could be any number of things bc I'm not really sure how it's supposed to work? I'm trying to base it off of simon but there's things like. like the vite.config file which I'm not sure if we're supposed to just *make* or if there's some npm thing we should call? aaaaagh

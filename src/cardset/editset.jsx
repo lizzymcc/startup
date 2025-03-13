@@ -14,6 +14,7 @@ function CardPair({term, def}){
 	);
 }
 export function EditSet(){
+	[isPrivate, setIsPrivate] = React.useState[false];
 	props.spt("Edit set (possibly not gonna get used)");
 	props.sbt(`/cardset/${setId}`);
 	return (
@@ -28,9 +29,12 @@ export function EditSet(){
 				</div>
 			</div>
 			<div className ="sidebar">
+				<label for="privatecheck">private set?</label>
+				<input type="checkbox" id="sunsetOn" name="privatecheck" checked={isPrivate} className = "form-check-input" onChange={(e)=>{setIsPrivate(!isPrivate)}}/>
 				<button className ="btn btn-primary"> add row </button>
 				<button className ="btn btn-primary"> save changes </button>
 				<NavLink to = '/cardset/5'><button className ="btn btn-primary">save & study</button></NavLink>
+
 			</div>
 		</div>
 		);

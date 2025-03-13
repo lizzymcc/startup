@@ -26,7 +26,7 @@ export function PlayBox(props){ //props: ENDSCREEN: endscreen (bool),  onRestart
 		}
 	}
 	function checkEnter(e){
-		console.log("key pressed: ", e.key);
+		//console.log("key pressed: ", e.key);
 		if (e.key === "Enter"){
 			document.getElementById("submit").click();
 		}

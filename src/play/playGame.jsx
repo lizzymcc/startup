@@ -40,7 +40,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 	function onComplete(){
 		//let c = getTime();
 		setScore(getTime);
-		console.log('complete!');
+		//console.log('complete!');
 
 		setComplete(true);
 	}
@@ -49,7 +49,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 			onComplete();
 		}
 		setqc([...qc.slice(0,qcIndex), ...qc.slice(qcIndex+1)]);
-		console.log("success, qcl: ", qc.length);
+		//console.log("success, qcl: ", qc.length);
 		//removes the item from the list and then goes to the next one, or the first one if we're going back to the beginning.
 	}
 	function onFail(){
@@ -85,7 +85,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 			</div>
 		);
 	} else {
-		console.log('qc: ', qc, 'qcl: ', qc.length, 'qci: ', qcIndex)
+		//console.log('qc: ', qc, 'qcl: ', qc.length, 'qci: ', qcIndex)
 		return(
 			<div className = 'pagespace'>
 				<PlayBox card ={qc[qcIndex] || {"term": "error", "def": "oops"}} askForDef = {askForDef} onSuccess={succeed} onFail={(e)=>onFail()} showhint={failedlast}/>
