@@ -105,11 +105,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Scores, login/authentication info, and card set data are all now stored on a separate service
+- [x] **Static middleware for frontend** - I... think this just asks if we used express.static? Which I did, it should be using the public folder
+- [ ] **Calls to third party endpoints** - While the 
+- [ ] **Backend service endpoints** - 
+- [ ] **Frontend calls service endpoints** - 
 
 ## 🚀 DB/Login deliverable
 

@@ -77,7 +77,7 @@ export default function App() {
 							<NotFound spt={setPageTitle} sbt={setBackTo} />
 						} />
 					</Routes>
-				<footer> CS 260 project - Lizzy McClellan <a href = "https://github.com/lizzymcc/startup"> (GitHub)</a> </footer>
+				<footer> CS 260 project - Lizzy McClellan <a href = "https://github.com/lizzymcc/startup"> (GitHub)</a>  |  Sunrise/sunset API by <a href="https://sunrise-sunset.org/api"> sunrise-sunset.org </a></footer>
 			</div>
 		</BrowserRouter>
 	);

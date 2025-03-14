@@ -45,7 +45,6 @@ export function SetSelect(props) {
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 
-				{errmsg}
 				{/*<NavLink to='/cardset/edit/5'><button className='btn btn-primary'>New Set</button></NavLink>*/}
 			</div>
 			<div className = 'setlist'>

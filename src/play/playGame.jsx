@@ -80,7 +80,7 @@ export function PlayGame({cSet, askForDef, updateRem, resetTimer, clearRuntime, 
 					</div>
 					<div>
 						<button className = "btn btn-primary" onClick={onReStart}>try again</button>
-						<button className = "btn btn-primary" onClick={e=>nav(`/scores/${cSet.id}`)}>view high scores</button>
+						{cSet.privateset ? (null) :(<button className = "btn btn-primary" onClick={e=>nav(`/scores/${cSet.id}`)}>view high scores</button>)}
 					</div>
 				</div>
 			</div>

@@ -48,7 +48,7 @@ async function getPersonalScore(setId){
 		//console.log("response: ", response);
 		const respobj = await response.json();
 		//console.log("personal score respobj: ", respobj);
-		return respobj;
+		return respobj.seconds;
 	} else {
 		//console.log("response: ", response);
 		const body = await response.json();
@@ -56,6 +56,7 @@ async function getPersonalScore(setId){
 		return null;
 	}
 }
+
 export function Scores(props){
 
 	const params=useParams();
@@ -64,7 +65,7 @@ export function Scores(props){
 	props.sbt(`/cardset/${setId}`);
 	const [hs, setHs] = React.useState(null);
 
-	const [slist, setSlist] = React.useState([])
+	const [slist, setSlist] = React.useState(null);
 	async function setUpScores(){
 		//let cScores = placeholderscores.scores.find(c=>(c.setid===setId)).highscores;
 		let cScores = await getScores(setId);
@@ -84,6 +85,8 @@ export function Scores(props){
 	}
 	setUpScores();
 
+	
+
 	function PersonalScore(){
 		if (hs){
 			return(
@@ -96,25 +99,35 @@ export function Scores(props){
 		}
 
 	}
+	function Scorespace(){
+		if (slist){
+
+			return(
+				<div className ="pagespace scorespace">	
+					<PersonalScore />	
+					<table>
+						<thead>
+						<tr>
+							<th>place
+							</th>
+							<th> user</th>
+							<th> time</th>
+						</tr>
+						</thead>
+						<tbody>
+						{slist.map((r)=> <ScoreRow place={r.place} user={r.user} time={r.time}/>)}
+						</tbody>
+					</table>
+		
+				</div>
+			);
+		} else {
+			return <div className='pagespace scorespace'><h1>Loading...</h1></div>
+		}
+	}
 	return(
 		<div className='main'>
-			<div className ="pagespace scorespace">	
-				<PersonalScore />	
-				<table>
-					<thead>
-					<tr>
-						<th>place
-						</th>
-						<th> user</th>
-						<th> time</th>
-					</tr>
-					</thead>
-					<tbody>
-					{slist.map((r)=> <ScoreRow place={r.place} user={r.user} time={r.time}/>)}
-					</tbody>
-				</table>
-
-			</div>
+			<Scorespace />
 		</div>
 	);
 }

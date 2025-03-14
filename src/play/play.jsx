@@ -38,14 +38,14 @@ async function addScore(id,seconds){
 	  }
 	);
 	if (response?.status === 200) {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const respobj = await response.json();
-		console.log("high score updated!");
+		//console.log("high score updated!");
 		return respobj;
 	} else {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const body = await response.json();
-		console.log(`Error: ${body.msg}`);
+		//console.log(`Error: ${body.msg}`);
 	}
 }
 
@@ -99,6 +99,7 @@ export function Play(props){
 	const setId=parseInt(params.setid);
 	const [errm, seterrm] = React.useState("Loading...");
 	const [cSet, setcset] = React.useState(new FlashcardSet(0,'','',false,[{term:errm, def:errm}]));
+
 	async function setupCset(){
 		setcset(await getSet(setId,seterrm));
 	}
