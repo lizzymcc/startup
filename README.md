@@ -107,9 +107,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Node.js/Express HTTP service** - Scores, login/authentication info, and card set data are all now stored on a separate service
 - [x] **Static middleware for frontend** - I... think this just asks if we used express.static? Which I did, it should be using the public folder
-- [ ] **Calls to third party endpoints** - While the 
-- [ ] **Backend service endpoints** - 
-- [ ] **Frontend calls service endpoints** - 
+- [x] **Calls to third party endpoints** - calls to sunrise/sunset endpoint in sunsetNotifier.jsx
+- [x] **Backend service endpoints** - they're there
+- [x] **Frontend calls service endpoints** - again, it calls them & gets stuff from them.
 
 ## 🚀 DB/Login deliverable
 

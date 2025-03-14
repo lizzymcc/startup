@@ -26,6 +26,7 @@ async function getSets(errm){
     } else {
 		console.log("response: ", response);
       const body = await response.json();
+	  console.log(`errm: ${body.msg}`);
       errm(`⚠ Error: ${body.msg}`);
     }
    //console.log(placeholdersets.sets);
@@ -35,7 +36,7 @@ async function getSets(errm){
 
 
 export function SetSelect(props) {
-	props.spt("Set Select");
+	//props.spt("Set Select");
 	const [errmsg, setMessage] = React.useState('no errors yet...');
 	const [setlist, setSetlist] = React.useState([]);
 	async function getlistworking(){

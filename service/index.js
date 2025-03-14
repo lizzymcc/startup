@@ -1,19 +1,21 @@
-const placeholdersets= require('./setdata/placeholdersets.json');
-const placeholderscoredata = require('./setdata/placeholderscoredata.json');
+const placeholdersets= require('./placeholdersets.json');
+const placeholderscoredata = require('./placeholderscoredata.json');
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 //copying code from the authtest index...
 const express = require('express');
-const app = express();
-
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
+const app = express();
+
+
 app.use(cookieParser());
-
-
-app.use(express.static('public'));
+/*app.use((_req, res) => {
+    res.sendFile('index.html', { root: 'public' });
+  });*/
 app.use(express.json());
+app.use(express.static('public'));
 const users = [];
 
 let apiRouter = express.Router();
@@ -228,66 +230,66 @@ apiRouter.post('/set', async (req, res) => { //ofc in the full version we want t
 
 	//create new cardset (initialization data is in the body of the set)
 	//POST /api/sets
-	apiRouter.post('/sets', async (req, res) => {
-		const token = req.cookies['token'];
-		const user = await getUser('token', token);
-		const cards = req.body.cards;
-		const ispriv = req.body.priv;
-		const title = req.body.title;
-		if (user) {
-			res.send(addSet(cards,ispriv,title,user.uname));
-		} else {			
-			res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
-		}
-	  });
+apiRouter.post('/sets', async (req, res) => {
+	const token = req.cookies['token'];
+	const user = await getUser('token', token);
+	const cards = req.body.cards;
+	const ispriv = req.body.priv;
+	const title = req.body.title;
+	if (user) {
+		res.send(addSet(cards,ispriv,title,user.uname));
+	} else {			
+		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
+	}
+	});
 
 	
 	//edit cardset 
 	//PUT /api/sets (request body includes cardset id), PUT /api/sets
-	apiRouter.put('/sets', async (req, res) => {
-		const token = req.cookies['token'];
-		const user = await getUser('token', token);
-		const setnum = gsbi(req.body.setid);
-		const cards = req.body.cards;
-		const ispriv = req.body.priv;
-		const title = req.body.title;
-		if (user && setnum) {
-			if (sets[setnum].creating_user === user.uname){
-				sets[setnum].cards = cards;
-				sets[setnum].title = title;
-				sets[setnum].privateset = ispriv;
-				res.send(sets[setnum]);
-				
-			} else {
-				res.status(401).send({ msg: 'not authorized to edit this set' });
+apiRouter.put('/sets', async (req, res) => {
+	const token = req.cookies['token'];
+	const user = await getUser('token', token);
+	const setnum = gsbi(req.body.setid);
+	const cards = req.body.cards;
+	const ispriv = req.body.priv;
+	const title = req.body.title;
+	if (user && setnum) {
+		if (sets[setnum].creating_user === user.uname){
+			sets[setnum].cards = cards;
+			sets[setnum].title = title;
+			sets[setnum].privateset = ispriv;
+			res.send(sets[setnum]);
+			
+		} else {
+			res.status(401).send({ msg: 'not authorized to edit this set' });
 
-			}
-		} else {			
-			res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
 		}
-	  });
+	} else {			
+		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
+	}
+	});
 
 	//remove cardset
-	apiRouter.delete('/sets', async (req, res) => {
-		const token = req.cookies['token'];
-		const user = await getUser('token', token);
-		const setnum = gsbi(req.body.setid);
-		if (user && setnum) {
-			if (sets[setnum].creating_user === user.uname){
-				sets = [...sets.slice(0,setnum), ...sets.slice(setnum+1)];
-				res.send(sets);
-			} else {
-				res.status(401).send({ msg: 'not authorized to edit this set' });
+apiRouter.delete('/sets', async (req, res) => {
+	const token = req.cookies['token'];
+	const user = await getUser('token', token);
+	const setnum = gsbi(req.body.setid);
+	if (user && setnum) {
+		if (sets[setnum].creating_user === user.uname){
+			sets = [...sets.slice(0,setnum), ...sets.slice(setnum+1)];
+			res.send(sets);
+		} else {
+			res.status(401).send({ msg: 'not authorized to edit this set' });
 
-			}
-		} else {			
-			res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
 		}
-	  });
+	} else {			
+		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
+	}
+	});
 
 // Middleware to verify that the user is authorized to call an endpoint
 const verifyAuth = async (req, res, next) => {
-	const user = await findUser('token', req.cookies[authCookieName]);
+	const user = await findUser('token', req.cookies["token"]);
 	if (user) {
 	  next();
 	} else {
@@ -295,6 +297,11 @@ const verifyAuth = async (req, res, next) => {
 	}
   };
 
+// Default error handler
+app.use(function (err, req, res, next) {
+	res.status(500).send({ type: err.name, message: err.message });
+  });
+  
 app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });
