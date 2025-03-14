@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import '../app.css';
 function SetDisp(props){
-	//console.log(props);
+	console.log(props);
 	return(
 		<div className = "setdisp">
 			<h3>
