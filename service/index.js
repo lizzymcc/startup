@@ -229,7 +229,7 @@ apiRouter.post('/set', async (req, res) => { //ofc in the full version we want t
 	//IF DOING EDITING/ADDING FROM THE USER END: (all of the edits will require a verification that the user is the owner)
 
 	//create new cardset (initialization data is in the body of the set)
-	//POST /api/sets
+	//POST /api/sets (UNUSED) (for now)
 apiRouter.post('/sets', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);

@@ -106,10 +106,23 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **Node.js/Express HTTP service** - Scores, login/authentication info, and card set data are all now stored on a separate service
-- [x] **Static middleware for frontend** - I... think this just asks if we used express.static? Which I did, it should be using the public folder
+- [x] **Static middleware for frontend** - yep
 - [x] **Calls to third party endpoints** - calls to sunrise/sunset endpoint in sunsetNotifier.jsx
-- [x] **Backend service endpoints** - they're there
-- [x] **Frontend calls service endpoints** - again, it calls them & gets stuff from them.
+- [x] **Backend service endpoints** - Endpoints made:
+	- `/api/auth` authentication endpoints (POST, PUT, DELETE) 
+	- `POST /api/scores`: gets high scores from a cardset specified in the request body
+	- `POST /api/scores/me`: gets the current user's high score (if applicable) for  a cardset specified in the request body
+	- `PUT /api/scores`: adds or updates the score for the current user
+	- `GET /api/sets/visible`: gets all public sets, and if a user is logged in and the owner of private sets, gets those as well
+	- `POST /api/set`: gets the data for a set by its id
+	- also some others that I think remain unused (for now)
+
+- [x] **Frontend calls service endpoints** - 
+	- `/api/auth` - login module
+	- `POST /api/scores(/me)` - high score screen
+	- `PUT /api/scores` - in the gameplay files
+	- `GET /api/sets/visible` - set select screen
+	- `POST /api/set` - set view screen, and gameplay screen
 
 ## 🚀 DB/Login deliverable
 
