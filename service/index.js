@@ -296,6 +296,9 @@ const verifyAuth = async (req, res, next) => {
 	  res.status(401).send({ msg: 'Unauthorized' });
 	}
   };
+app.use((_req, res) => {
+res.sendFile('index.html', { root: 'public' });
+});
 
 // Default error handler
 app.use(function (err, req, res, next) {
