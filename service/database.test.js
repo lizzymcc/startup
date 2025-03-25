@@ -91,7 +91,7 @@ test("removing a user's token", async () => {
 		token: "tired"
 	};
 	delete user2.token;
-	DB.updateUser(user2);
+	await DB.updateUser(user2);
 	const t = await DB.getUserN(user2.uname);
 	expect(t.password).toBe(user2.password);
 	if (t.token){
@@ -114,7 +114,7 @@ test('get max setId', async () =>{
 function getSIL(t){
 	let c = t.map((i)=>i.id);
 	c.sort((a,b)=>a-b);
-	console.log("c: ",c);
+	//console.log("c: ",c);
 	return c;
 }
 test('get public sets', async() =>{
@@ -132,9 +132,33 @@ test ('get visible sets', async() => {
 test('get cards from a set', async() => {
 	const t = await DB.getSet(5039);
 	expect(t.cards.length).toBe(4);
+});
+
+test('add scores to the database & get them from a set', async () => {
+	await DB.clearScores();
+	await DB.addScore(5039, 'abc', 15);
+	await DB.addScore(5039, 'def', 5);
+	await DB.addScore(5039, 'player5', 8);
+	await DB.addScore(5039, 'player6', 6);
+	await DB.addScore(5039, 'player7', 80);
+	await DB.addScore(5038, 'player6', 93);
+	const t = await DB.getScore(5039,'def');
+	expect(t).toBe(5);
+	const c = await DB.getScore(5038, 'player6');
+	expect(c).toBe(93);
+});
+test('get scores in order from a set', async () => {
+	const t = await DB.getScoresForSet(5039);
+	expect(t.map((i)=>i.user)).toEqual(['def','player6','player5','abc','player7']);
 })
 
-
+test('update a score', async() => {
+	await DB.updateScore(5039, 'player7', 12);
+	const t = await DB.getScoresForSet(5039);
+	expect(t.map((i)=>i.user)).toEqual(['def','player6','player5','player7','abc']);
+	const c = await DB.getScore(5039,'player7');
+	expect(c).toBe(12);
+});
 
 
 /*test('user', async () => {

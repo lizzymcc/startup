@@ -129,9 +129,7 @@ async function getVisibleSets(uname) {
 	return DB.getVisibleSets(uname);
 	//return sets.filter(item => (!item.privateset || item.creating_user === uname));
 }
-function gsbi(sid) {
-	return sets.findIndex((c) => (c.id === sid));
-}
+
 function getScoresIndex(sid) {
 	return scoredata.findIndex((c) => (c.setid === sid));
 }
@@ -285,23 +283,24 @@ apiRouter.post('/sets', async (req, res) => {
 
 
 //edit cardset 
-//PUT /api/sets (request body includes cardset id), PUT /api/sets
+//PUT /api/sets (request body includes cardset id), PUT /api/sets (UNUSED)
 apiRouter.put('/sets', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	const setnum = gsbi(req.body.setid);
-	const cards = req.body.cards;
-	const ispriv = req.body.priv;
-	const title = req.body.title;
-	if (user && setnum) {
-		if (sets[setnum].creating_user === user.uname) {
-			sets[setnum].cards = cards;
-			sets[setnum].title = title;
-			sets[setnum].privateset = ispriv;
-			res.send(sets[setnum]);
+	const newset = {
+		id: req.body.setid,
+		cards: req.body.cards,
+		title: req.body.title,
+		privateset: req.body.priv
+	}
 
+	if (user) {
+		const t = await DB.updateSet(newset, user.uname);
+		if (t) {
+			res.send(t);
 		} else {
-			res.status(401).send({ msg: 'not authorized to edit this set' });
+			res.status(401).send({ msg: 'set does not exist, or you are not authorized to edit this set' });
 
 		}
 	} else {
@@ -313,14 +312,12 @@ apiRouter.put('/sets', async (req, res) => {
 apiRouter.delete('/sets', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
-	const setnum = gsbi(req.body.setid);
-	if (user && setnum) {
-		if (sets[setnum].creating_user === user.uname) {
-			sets = [...sets.slice(0, setnum), ...sets.slice(setnum + 1)];
-			res.send(sets);
-		} else {
-			res.status(401).send({ msg: 'not authorized to edit this set' });
-
+	if (user) {
+		try {
+			const t = await DB.removeSet(req.body.setid, user.uname);
+			res.send(t);
+		} catch (exp) {
+			res.status(401).send({ msg: `exception thrown when trying to remove set, error: ${exp.body}` });
 		}
 	} else {
 		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });

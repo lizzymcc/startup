@@ -7,12 +7,13 @@ const db = client.db('startup');
 const userCollection = db.collection('user');
 
 const use_history = db.collection('use_history');
-const hsCollection = db.collection('high_scores');
+const scoreCollection = db.collection('high_scores');
 //const cardpairCollection = db.collection('card_pair');
 const setCollection = db.collection('flashcard_set');
 
 userCollection.createIndex({uname:1},{unique:true});
 setCollection.createIndex({id:1},{unique:true});
+scoreCollection.createIndex({setid:1, user:1});
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -105,14 +106,39 @@ async function clearSets(){
 	await setCollection.deleteMany();
 	return 1;
 }
-async function removeSet(id){
-	await setCollection.deleteOne({id: id});
-	return 1;
+async function removeSet(id, usercheck){
+	const t = await setCollection.deleteOne({id: id, creating_user: usercheck});
+	return t;
+}
+async function updateSet(inset, usercheck){ 
+	const t = await setCollection.updateOne({id: inset.id, creating_user: usercheck}, { $set: {cards:inset.cards, title:inset.title, privateset:inset.privateset} });
+	return t;
 }
 
+async function getScoresForSet(setid){
+	const t = await scoreCollection.find({setid:setid}).sort({score : 1}).toArray();
+	return t;
+}
 
+async function getScore(setid, uname){
+	const t = await scoreCollection.findOne({ setid: setid, user:uname });
+	return t.score;
+}
 
+async function updateScore(setid, uname, score){
+	const t = await scoreCollection.updateOne({setid: setid, user: uname}, { $set: {score: score} });
+	return t;
+}
 
+async function addScore(setid, uname, score) {
+	const t =await scoreCollection.insertOne({setid: setid, user: uname, score: score});
+	return t;
+}
+
+async function clearScores() {
+	const t = await scoreCollection.deleteMany();
+	return t;
+}
 
 
 module.exports = {
@@ -129,6 +155,11 @@ module.exports = {
 	getSetCount,
 	getMaxId,
 	clearSets,
-	//addScore,
-	//getHighScores,
+	removeSet,
+	updateSet,
+	addScore,
+	getScore,
+	updateScore,
+	getScoresForSet,
+	clearScores,
   };
