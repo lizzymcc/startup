@@ -60,7 +60,7 @@ export default function App() {
 
 					<Routes>
 						<Route path='/' element={
-							<SetSelect spt={setPageTitle} sbt={setBackTo}/>
+							<SetSelect spt={setPageTitle} sbt={setBackTo} loginTrigger = {authState}/>
 						} exact />
 						<Route path='/cardset/:setid' element={
 							<CardSet  spt={setPageTitle} sbt={setBackTo}/>

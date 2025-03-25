@@ -1,4 +1,4 @@
-const placeholdersets= require('./placeholdersets.json');
+const placeholdersets = require('./placeholdersets.json');
 const placeholderscoredata = require('./placeholderscoredata.json');
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -22,71 +22,87 @@ app.use(`/api`, apiRouter);
 //again, we're going to copy the code from the authtest for now, with some edits...
 
 function setAuthCookie(res, user) {
-  res.cookie('token', user.token, {
-	secure: true,
-	httpOnly: true,
-	sameSite: 'strict',
-  });
+	res.cookie('token', user.token, {
+		secure: true,
+		httpOnly: true,
+		sameSite: 'strict',
+	});
 }
 async function createUser(uname, password) {
-  const passwordHash = await bcrypt.hash(password, 10);
-  const user = {
-	uname: uname,
-	password: passwordHash,
-	token:uuid.v4(),
-  };
-  await DB.addUser(user);
-  return user;
+	const passwordHash = await bcrypt.hash(password, 10);
+	const user = {
+		uname: uname,
+		password: passwordHash,
+		token: uuid.v4(),
+	};
+	await DB.addUser(user);
+	return user;
 }
 
 function getUser(field, value) {
-  if (value) {
-	if (field === 'uname'){
-		return DB.getUserN(value);
-	} else {
-		return DB.getUserT(value);
+	if (value) {
+		if (field === 'uname') {
+			return DB.getUserN(value);
+		} else {
+			return DB.getUserT(value);
+		}
 	}
-  }
-  return null;
+	return null;
 }
 
 // registration - DB X
 apiRouter.post('/auth', async (req, res) => {
-  if (await getUser('uname', req.body.uname)) {
-	res.status(409).send({msg: 'Existing user'});
-  } else {
-	const user = await createUser(req.body.uname, req.body.password);
-	setAuthCookie(res, user);
-	res.send({ uname: user.uname });
-  }
+	if (await getUser('uname', req.body.uname)) {
+		res.status(409).send({ msg: 'Existing user' });
+	} else {
+		try {
+			const user = await createUser(req.body.uname, req.body.password);
+			setAuthCookie(res, user);
+		} catch (exp) {
+			if (exp.errorResponse.code === 11000){
+				res.status(409).send({ msg: 'Existing user' });
+			} else {
+				res.status(409).send( {msg: exp.message});
+			}
+			return 0;
+		}
+		res.send({ uname: req.body.uname });
+	}
 });
 
 // login - DB X
 apiRouter.put('/auth', async (req, res) => {
 	const user = await getUser('uname', req.body.uname);
 	if (user && (await bcrypt.compare(req.body.password, user.password))) {
-		user.token = uuid.v4();
-		await DB.updateUser(user)
-		setAuthCookie(res, user);
-		res.send({ uname: user.uname });
+		try {
+			user.token = uuid.v4();
+			await DB.updateUser(user)
+			setAuthCookie(res, user);
+			res.send({ uname: user.uname });
+		} catch (exp) {
+			res.status(401).send({msg: exp.message});
+		}
+
 	} else {
 		res.status(401).send({ msg: 'Unauthorized' });
 	}
-  });
+});
 //DB X
-function clearAuthCookie(res, user) {
+async function clearAuthCookie(res, user) {
 	delete user.token;
-	DB.updateUser(user);
+	await DB.updateUser(user);
 	res.clearCookie('token');
 }
 // logout DB X
 apiRouter.delete('/auth', async (req, res) => {
-  const token = req.cookies['token'];
-  const user = await getUser('token', token);
-  if (user) {
-	clearAuthCookie(res, user);
-  }
-  res.status(204).send();
+	const token = req.cookies['token'];
+	const user = await getUser('token', token);
+	if (user) {
+		await clearAuthCookie(res, user);
+		res.status(204).send();
+	} else {
+		res.status(404).send({msg:"token not attachedcd to any user"});
+	}
 });
 
 
@@ -96,11 +112,11 @@ apiRouter.get('/user/me', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	if (user) {
-	  res.send({ uname: user.uname });
+		res.send({ uname: user.uname });
 	} else {
-	  res.status(401).send({ msg: 'Unauthorized' });
+		res.status(401).send({ msg: 'Unauthorized' });
 	}
-  });
+});
 
 const psets = placeholdersets.sets;
 const scoredata = placeholderscoredata.scores;
@@ -109,34 +125,34 @@ async function getPublicSets() {
 	return DB.getPublicSets();
 	//return sets.filter(item => !item.privateset);
 }
-async function getVisibleSets(uname){
+async function getVisibleSets(uname) {
 	return DB.getVisibleSets(uname);
 	//return sets.filter(item => (!item.privateset || item.creating_user === uname));
 }
-function gsbi(sid){
-	return sets.findIndex((c)=>(c.id===sid));
+function gsbi(sid) {
+	return sets.findIndex((c) => (c.id === sid));
 }
-function getScoresIndex(sid){
-	return scoredata.findIndex((c)=>(c.setid===sid));
+function getScoresIndex(sid) {
+	return scoredata.findIndex((c) => (c.setid === sid));
 }
 //SCORES: /api/scores
 //get high scores from a cardset
 //POST /api/scores (request body includes cardset id)\
-apiRouter.post('/scores', async (req, res) => { 
+apiRouter.post('/scores', async (req, res) => {
 	const scores = scoredata[getScoresIndex(req.body.setid)];
-	if (scores){
+	if (scores) {
 		res.send(scores);
 	} else {
-		res.status(400).send({msg: "no scores for this cardset"});
+		res.status(400).send({ msg: "no scores for this cardset" });
 	}
-  });
+});
 
 
 
-function getScore(uname, sid){
+function getScore(uname, sid) {
 	let c = scoredata[getScoresIndex(sid)];
-	if (c){
-		return c.highscores.find((d)=>(d.player === uname)) || null;
+	if (c) {
+		return c.highscores.find((d) => (d.player === uname)) || null;
 	} else {
 		return null;
 	}
@@ -148,39 +164,39 @@ apiRouter.post('/scores/me', async (req, res) => { //ofc in the full version we 
 	const user = await getUser('token', token);
 	if (user) {
 		const score = await getScore(user.uname, req.body.setid);
-		if (score){
+		if (score) {
 			res.send(score);
 		} else {
-			res.status(400).send({msg: "no user score for this cardset"});
+			res.status(400).send({ msg: "no user score for this cardset" });
 		}
 	} else {
-		res.status(401).send({msg: "cannot add a score without a username"});
+		res.status(401).send({ msg: "cannot add a score without a username" });
 	}
-  });
+});
 
 //add or update user's high score
 //PUT /api/scores (request body includes cardset id ) -- if 
 apiRouter.put('/scores', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
-	const s=req.body.seconds;
+	const s = req.body.seconds;
 	const scoreindex = await getScoresIndex(req.body.setid);
-	if (user && scoreindex > -1 && scoredata[scoreindex].highscores){
+	if (user && scoreindex > -1 && scoredata[scoreindex].highscores) {
 		const u = user.uname;
 		const score = await getScore(u, req.body.setid);
-		if (score){
-			if (score.seconds > s){
-				scoredata[scoreindex].highscores.find((d)=>(d.player === u)).seconds = s;
+		if (score) {
+			if (score.seconds > s) {
+				scoredata[scoreindex].highscores.find((d) => (d.player === u)).seconds = s;
 			}
 		} else {
-			scoredata[scoreindex].highscores.push({player:u, seconds:s});
+			scoredata[scoreindex].highscores.push({ player: u, seconds: s });
 		}
 		res.send(getScore(u, req.body.setid));
 	} else {
-		res.status(401).send({msg: "cannot add a score without a username"});
+		res.status(401).send({ msg: "cannot add a score without a username" });
 
 	}
-  });
+});
 
 
 
@@ -190,34 +206,42 @@ apiRouter.put('/scores', async (req, res) => { //ofc in the full version we want
 //get cardsets that the current user can see (public cardsets + private cardsets whose username matches the user):
 //GET /api/sets/visible (request body(?) includes user id or lack thereof)
 apiRouter.get('/sets/visible', async (req, res) => {
-	const t = await DB.getSetCount();
+	/*const t = await DB.getSetCount();
 	console.log("set count: ",t);
 	if (t < 1){
 		psets.forEach((i)=>{
 			addSet(i.cards, i.privateset, i.title, i.creating_user);
 		});
-	}
+	}*/
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	if (user) {
-	  res.send({sets: getVisibleSets(user.uname)});
+		const c = await getVisibleSets(user.uname);
+		res.send({ sets: c });
 	} else {
-	  res.send({sets: getPublicSets()});
+		const c = await getPublicSets();
+		res.send({ sets: c });
 	}
-  });
+});
 
-async function addSet(cards, isprivate, title, uname){
-	let newid = await DB.getMaxId();
+async function addSet(cards, isprivate, title, uname) {
+	let newid = 0;
+	try {
+		newid = await DB.getMaxId();
+	} catch (err) {
+		newid = 1;
+	}
 	const newset = {
-		id: newid + 1, 
+		id: newid + 1,
 		title: title,
-		creating_user: uname, 
-		privateset: isprivate, 
+		creating_user: uname,
+		privateset: isprivate,
 		cards: cards,
 	};
 	//let newid= await DB.addSet(newset);
 	//newset.id = newid;
-	await DB.addSet(newset);
+	const t = await DB.addSet(newset);
+
 	/*const newscores = {
 		setid:newid,
 		highscores:[],
@@ -230,21 +254,21 @@ async function addSet(cards, isprivate, title, uname){
 apiRouter.post('/set', async (req, res) => { //ofc in the full version we want to code this so that private sets that arent authorized can't be accessed from this endpoint but that's more something to do once we get into databases -- 
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
-	const setgot = sets[gsbi(req.body.setid)];
-	if (setgot){
-		if (!setgot.privateset || (user && user.uname === setgot.creating_user)){
+	const setgot = await DB.getSet(req.body.setid);
+	if (setgot && setgot != null) {
+		if (!setgot.privateset || (user && user.uname === setgot.creating_user)) {
 			res.send(setgot);
 		} else {
-			res.status(401).send({msg: "not authorized to access this cardset\n(how did you even get here)"});
+			res.status(401).send({ msg: "not authorized to access this cardset\n(how did you even get here)" });
 		}
 	} else {
-		res.status(400).send({msg: "card set does not exist"});
+		res.status(400).send({ msg: "card set does not exist" });
 	}
-  }); //ok this is less of a priority than...
-	//IF DOING EDITING/ADDING FROM THE USER END: (all of the edits will require a verification that the user is the owner)
+}); //ok this is less of a priority than...
+//IF DOING EDITING/ADDING FROM THE USER END: (all of the edits will require a verification that the user is the owner)
 
-	//create new cardset (initialization data is in the body of the set)
-	//POST /api/sets (UNUSED) (for now)
+//create new cardset (initialization data is in the body of the set)
+//POST /api/sets (UNUSED) (for now)
 apiRouter.post('/sets', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
@@ -252,16 +276,16 @@ apiRouter.post('/sets', async (req, res) => {
 	const ispriv = req.body.priv;
 	const title = req.body.title;
 	if (user) {
-		c = await addSet(cards,ispriv,title,user.uname);
+		c = await addSet(cards, ispriv, title, user.uname);
 		res.send(c);
-	} else {			
+	} else {
 		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
 	}
-	});
+});
 
-	
-	//edit cardset 
-	//PUT /api/sets (request body includes cardset id), PUT /api/sets
+
+//edit cardset 
+//PUT /api/sets (request body includes cardset id), PUT /api/sets
 apiRouter.put('/sets', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
@@ -270,59 +294,59 @@ apiRouter.put('/sets', async (req, res) => {
 	const ispriv = req.body.priv;
 	const title = req.body.title;
 	if (user && setnum) {
-		if (sets[setnum].creating_user === user.uname){
+		if (sets[setnum].creating_user === user.uname) {
 			sets[setnum].cards = cards;
 			sets[setnum].title = title;
 			sets[setnum].privateset = ispriv;
 			res.send(sets[setnum]);
-			
+
 		} else {
 			res.status(401).send({ msg: 'not authorized to edit this set' });
 
 		}
-	} else {			
+	} else {
 		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
 	}
-	});
+});
 
-	//remove cardset
+//remove cardset
 apiRouter.delete('/sets', async (req, res) => {
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	const setnum = gsbi(req.body.setid);
 	if (user && setnum) {
-		if (sets[setnum].creating_user === user.uname){
-			sets = [...sets.slice(0,setnum), ...sets.slice(setnum+1)];
+		if (sets[setnum].creating_user === user.uname) {
+			sets = [...sets.slice(0, setnum), ...sets.slice(setnum + 1)];
 			res.send(sets);
 		} else {
 			res.status(401).send({ msg: 'not authorized to edit this set' });
 
 		}
-	} else {			
+	} else {
 		res.status(401).send({ msg: 'cannot create or edit sets without logging in' });
 	}
-	});
+});
 
 // Middleware to verify that the user is authorized to call an endpoint
 const verifyAuth = async (req, res, next) => {
 	const user = await findUser('token', req.cookies["token"]);
 	if (user) {
-	  next();
+		next();
 	} else {
-	  res.status(401).send({ msg: 'Unauthorized' });
+		res.status(401).send({ msg: 'Unauthorized' });
 	}
-  };
+};
 app.use((_req, res) => {
-res.sendFile('index.html', { root: 'public' });
+	res.sendFile('index.html', { root: 'public' });
 });
 
 // Default error handler
 app.use(function (err, req, res, next) {
 	res.status(500).send({ type: err.name, message: err.message });
-  });
-  
+});
+
 /*app.listen(port, () => {
 	console.log(`Listening on port ${port}`);
 });*/
 
-module.exports=app;
+module.exports = app;

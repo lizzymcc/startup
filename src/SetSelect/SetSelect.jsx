@@ -24,13 +24,15 @@ async function getSets(errm){
     if (response?.status === 200) {
 		console.log("response: ", response);
 		const respobj = await response.json();
-		console.log("respobj.sets: ", respobj.sets);
-		return respobj.sets;
+		errm(null);
+		//console.log("respobj.sets: ", respobj.sets);
+		return respobj;
     } else {
 		console.log("response: ", response);
-      const body = await response.json();
-	  console.log(`errm: ${body.msg}`);
-      errm(`⚠ Error: ${body.msg}`);
+		const body = await response.json();
+		console.log(`errm: ${body.msg}`);
+		errm(`⚠ Error: ${body.msg}`);
+		return null;
     }
    //console.log(placeholdersets.sets);
    //return placeholdersets.sets;
@@ -60,23 +62,40 @@ async function newSetButton(){
 	const setId = await createSet();
 	navigate(`/cardset/edit/${setId}`);
 }*/
-
-export function SetSelect(props) {
-	props.spt("Set Select");
-	const [errmsg, setMessage] = React.useState('no errors yet...');
-	const [setlist, setSetlist] = React.useState([]);
-	async function getlistworking(){
-		setSetlist(await getSets(setMessage));
-	};
-	getlistworking();
+function SetSelectIsolater(props){
+	const [sl, setSL] = React.useState([]);
+	React.useEffect(()=>{
+		setSL(props.setlist.sets);
+		console.log("setting sl to ", sl);
+	}, [props.setlist]);
+	/*if (props.errm){
+		return(		
+		<div className = 'main'>
+			<h1>{props.errm}</h1>
+		</div>);
+	}*/
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 
 				{/*<button className='btn btn-primary' onClick={newSetButton}>New Set</button>*/}
 			</div>
 			<div className = 'setlist'>
-				{setlist.map((s)=><SetDisp set={s}/>)}
+				{sl.map((s)=><SetDisp set={s}/>)}
 			</div>
 		</div>
 	);
+}
+export function SetSelect(props) {
+	const [errmsg, setMessage] = React.useState(null);
+	const [setlist, setSetlist] = React.useState({sets: []});
+
+	React.useEffect(()=>{
+		async function getlistworking(){
+			const t = await getSets(setMessage);
+			setSetlist(t);
+		}
+		getlistworking();},[props.loginTrigger]);
+	props.spt("Set Select");
+	return(<SetSelectIsolater setlist={setlist} errm={errmsg}/>);
+
 };
