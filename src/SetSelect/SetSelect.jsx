@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import '../app.css';
 function SetDisp(props){
 	console.log(props);
@@ -16,12 +16,15 @@ function SetDisp(props){
 	)
 }
 async function getSets(errm){
+	console.log("getting sets...");
 	const response = await fetch('/api/sets/visible',{
 		method: 'get',
 	  }
 	);
     if (response?.status === 200) {
+		console.log("response: ", response);
 		const respobj = await response.json();
+		console.log("respobj.sets: ", respobj.sets);
 		return respobj.sets;
     } else {
 		console.log("response: ", response);
@@ -33,10 +36,33 @@ async function getSets(errm){
    //return placeholdersets.sets;
 
 }
-
+/*async function createSet(){
+	const response = await fetch('/api/sets',{
+		method: 'post',
+		cards: [],
+		isPrivate: true,
+		title:'untitled'
+	  }
+	);
+    if (response?.status === 200) {
+		console.log("")
+		const respobj = await response.json();
+		return respobj.id;
+    } else {
+		console.log("response: ", response);
+      const body = await response.json();
+	  console.log(`errm: ${body.msg}`);
+      errm(`⚠ Error: ${body.msg}`);
+    }
+}
+async function newSetButton(){
+	const navigate = useNavigate();
+	const setId = await createSet();
+	navigate(`/cardset/edit/${setId}`);
+}*/
 
 export function SetSelect(props) {
-	//props.spt("Set Select");
+	props.spt("Set Select");
 	const [errmsg, setMessage] = React.useState('no errors yet...');
 	const [setlist, setSetlist] = React.useState([]);
 	async function getlistworking(){
@@ -46,7 +72,7 @@ export function SetSelect(props) {
 	return(
 		<div className = 'main'>
 			<div className = 'sidebar'> 
-				{/*<NavLink to='/cardset/edit/5'><button className='btn btn-primary'>New Set</button></NavLink>*/}
+				{/*<button className='btn btn-primary' onClick={newSetButton}>New Set</button>*/}
 			</div>
 			<div className = 'setlist'>
 				{setlist.map((s)=><SetDisp set={s}/>)}

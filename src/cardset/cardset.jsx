@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink, useParams } from 'react-router-dom';
-//import placeholdersets from '../setdata/placeholdersets.json';
 import { FlashcardSet } from '../FlashcardSet'
 import { CardsetSidebar } from './cardsetSidebar';
 
