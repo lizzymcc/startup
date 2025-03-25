@@ -149,13 +149,13 @@ test('add scores to the database & get them from a set', async () => {
 });
 test('get scores in order from a set', async () => {
 	const t = await DB.getScoresForSet(5039);
-	expect(t.map((i)=>i.user)).toEqual(['def','player6','player5','abc','player7']);
+	expect(t.map((i)=>i.player)).toEqual(['def','player6','player5','abc','player7']);
 })
 
 test('update a score', async() => {
 	await DB.updateScore(5039, 'player7', 12);
 	const t = await DB.getScoresForSet(5039);
-	expect(t.map((i)=>i.user)).toEqual(['def','player6','player5','player7','abc']);
+	expect(t.map((i)=>i.player)).toEqual(['def','player6','player5','player7','abc']);
 	const c = await DB.getScore(5039,'player7');
 	expect(c).toBe(12);
 });

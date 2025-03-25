@@ -86,8 +86,8 @@ async function getVisibleSets(uname){
 }
 async function addSet(set){
 	const t = await setCollection.insertOne(set);
-	console.log("t: ",t);
-	return t.insertedId;
+	//console.log("t: ",t);
+	return (t ? t.insertedId : null);
 }
 async function getSetCount(){
 	const t = await setCollection.countDocuments();
@@ -117,12 +117,12 @@ async function updateSet(inset, usercheck){
 
 async function getScoresForSet(setid){
 	const t = await scoreCollection.find({setid:setid}).sort({score : 1}).toArray();
-	return t;
+	return (t ? t.map((i)=>({player:i.user, seconds:i.score})) : null);
 }
 
 async function getScore(setid, uname){
-	const t = await scoreCollection.findOne({ setid: setid, user:uname });
-	return t.score;
+	const t = await scoreCollection.findOne({ setid: setid, user:uname});
+	return (t ? t.score : null);
 }
 
 async function updateScore(setid, uname, score){

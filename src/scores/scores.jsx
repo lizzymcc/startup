@@ -27,7 +27,7 @@ async function getScores(setId){
 		//console.log("response: ", response);
 		const respobj = await response.json();
 		//console.log("respobj: ", respobj);
-		return respobj.highscores;
+		return respobj;
 	} else {
 		//console.log("response: ", response);
 		const body = await response.json();
@@ -115,7 +115,7 @@ export function Scores(props){
 						</tr>
 						</thead>
 						<tbody>
-						{slist.map((r)=> <ScoreRow place={r.place} user={r.user} time={r.time}/>)}
+						{slist.slice(0,(hs ? 8 : 10)).map((r)=> <ScoreRow place={r.place} user={r.user} time={r.time}/>)}
 						</tbody>
 					</table>
 		

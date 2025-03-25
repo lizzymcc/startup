@@ -130,14 +130,14 @@ async function getVisibleSets(uname) {
 	//return sets.filter(item => (!item.privateset || item.creating_user === uname));
 }
 
-function getScoresIndex(sid) {
+/*function getScoresIndex(sid) {
 	return scoredata.findIndex((c) => (c.setid === sid));
-}
+}*/
 //SCORES: /api/scores
 //get high scores from a cardset
 //POST /api/scores (request body includes cardset id)\
 apiRouter.post('/scores', async (req, res) => {
-	const scores = scoredata[getScoresIndex(req.body.setid)];
+	const scores = await DB.getScoresForSet(req.body.setid);
 	if (scores) {
 		res.send(scores);
 	} else {
@@ -147,13 +147,9 @@ apiRouter.post('/scores', async (req, res) => {
 
 
 
-function getScore(uname, sid) {
-	let c = scoredata[getScoresIndex(sid)];
-	if (c) {
-		return c.highscores.find((d) => (d.player === uname)) || null;
-	} else {
-		return null;
-	}
+async function getScore(uname, sid) {
+	const c = await DB.getScore(sid, uname);
+	return c; 
 }
 //get user's score for a cardset (or if they don't have one)
 //POST /api/scores/me (request body includes cardset id)
@@ -163,7 +159,7 @@ apiRouter.post('/scores/me', async (req, res) => { //ofc in the full version we 
 	if (user) {
 		const score = await getScore(user.uname, req.body.setid);
 		if (score) {
-			res.send(score);
+			res.send({player: user.uname, seconds:score});
 		} else {
 			res.status(400).send({ msg: "no user score for this cardset" });
 		}
@@ -178,18 +174,18 @@ apiRouter.put('/scores', async (req, res) => { //ofc in the full version we want
 	const token = req.cookies['token'];
 	const user = await getUser('token', token);
 	const s = req.body.seconds;
-	const scoreindex = await getScoresIndex(req.body.setid);
-	if (user && scoreindex > -1 && scoredata[scoreindex].highscores) {
+	const sid = req.body.setid;
+	if (user) {
 		const u = user.uname;
-		const score = await getScore(u, req.body.setid);
+		const score = await getScore(u, sid);
 		if (score) {
 			if (score.seconds > s) {
-				scoredata[scoreindex].highscores.find((d) => (d.player === u)).seconds = s;
+				await DB.updateScore(sid,u,s);
 			}
 		} else {
-			scoredata[scoreindex].highscores.push({ player: u, seconds: s });
+			await DB.addScore(sid,u,s);
 		}
-		res.send(getScore(u, req.body.setid));
+		res.send(getScore(u, sid));
 	} else {
 		res.status(401).send({ msg: "cannot add a score without a username" });
 

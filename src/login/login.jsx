@@ -79,6 +79,7 @@ export function Login(props) {
 			const response = await fetch('/api/auth', {
 				method: 'delete',
 			});
+			console.log("response: ", response);
 			if (response?.status === 204) {
 				//console.log("response: ", response);
 				{ props.authfunc(AuthState.Unauthenticated) };
@@ -87,8 +88,10 @@ export function Login(props) {
 				hideLogin(e);
 			} else {
 				//console.log("response: ", response);
-				const body = await response.json();
-				setError(`Error: ${body.msg}`);
+				{ props.authfunc(AuthState.Unauthenticated) };
+				{ props.unamefunc('') };
+				localStorage.setItem('userName', "");
+				hideLogin(e);
 			}
 
 		}
