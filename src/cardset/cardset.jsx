@@ -29,15 +29,15 @@ async function getSet(id,errm){
 	  }
 	);
     if (response?.status === 200) {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const respobj = await response.json();
-		console.log("respobj: ", respobj);
+		//console.log("respobj: ", respobj);
 		errm('Cards:');
 		return respobj;
     } else {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const body = await response.json();
-		console.log("respobj: ", body);
+		//console.log("respobj: ", body);
 		errm(`Error: ${body.msg}`);
 		return(new FlashcardSet(setId))
     }

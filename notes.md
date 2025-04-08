@@ -107,3 +107,6 @@ Maybe if the user has a score and someone beats it on the same set?
 I should look at the project requirements again i think
 
 ok so the first specification says it *can* be "realtime data that your service is generatiing" so I can probably do soemthing with the sunset api. thank heavens.
+
+
+Also if I have time I should really try and mkae the database endpoints more secure bc they're kinda. Not. right now. but websocket stuff first.

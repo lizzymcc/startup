@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import '../app.css';
 function SetDisp(props){
-	console.log(props);
+	//console.log(props);
 	return(
 		<div className = "setdisp">
 			<h3>
@@ -16,13 +16,13 @@ function SetDisp(props){
 	)
 }
 async function getSets(errm){
-	console.log("getting sets...");
+	//console.log("getting sets...");
 	const response = await fetch('/api/sets/visible',{
 		method: 'get',
 	  }
 	);
     if (response?.status === 200) {
-		console.log("response: ", response);
+		//console.log("response: ", response);
 		const respobj = await response.json();
 		errm(null);
 		//console.log("respobj.sets: ", respobj.sets);
@@ -66,7 +66,7 @@ function SetSelectIsolater(props){
 	const [sl, setSL] = React.useState([]);
 	React.useEffect(()=>{
 		setSL(props.setlist.sets);
-		console.log("setting sl to ", sl);
+		//console.log("setting sl to ", sl);
 	}, [props.setlist]);
 	/*if (props.errm){
 		return(		
