@@ -11,6 +11,24 @@ import {Userbar} from './login/userbar'
 import { AuthState } from './login/authState';
 import './app.css';
 
+async function getCurrentUser(){
+		console.log("getting user...");
+		const response = await fetch('/api/user/me',{
+			method: 'get',
+		  }
+		);
+		if (response?.status === 200) {
+			//console.log("response: ", response);
+			const respobj = await response.json();
+			//console.log("respobj.uname: ", respobj.uname);
+			return respobj.uname;
+		} else {
+			//console.log("response: ", response);
+			const body = await response.json();
+			//console.log(`errm: ${body.msg}`);
+			return null;
+		}	
+}
 
 
 function NotFound(){
@@ -32,12 +50,16 @@ function BackButton({to}){
 }
 
 export default function App() {
-	const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+	const [userName, setUserName] = React.useState(null);
 	const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
 	const [authState, setAuthState] = React.useState(currentAuthState);
 	const [loginDisp, setLoginDisp] = React.useState(false);
 	const [pageTitle, setPageTitle] = React.useState('Set select');
 	const [backTo, setBackTo] = React.useState("/");
+	getCurrentUser().then((e) => {
+		setUserName(e);
+		setAuthState(e ? AuthState.Authenticated : AuthState.Unauthenticated);
+	});
 	function loginShow(e) {
 		if (!loginDisp){
 			setLoginDisp(true);
