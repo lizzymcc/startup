@@ -50,7 +50,7 @@ I am going to use the required technologies in the following ways.
 - **React** - the practice game itself, high score settings
 - **Service** - again, the game itself, if possible (probably not) getting flashcard sets from quizlet, and I thought it would be fun to have a sunrise/sunset notifier that asks if you want to pause to look outside 
 - **DB/Login** - secure login/account system
-- **WebSocket** - sunrise notifier, get notifications if someone else is studying the same set perhaps
+- **WebSocket** - sunrise notifier, get notifications if someone else cis studying the same set perhaps
 
 ## 🚀 AWS deliverable
 

@@ -4,8 +4,8 @@ const config = require('./dbConfig.json');
 const url = `mongodb+srv://${config.username}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 const db = client.db('startup');
-const userCollection = db.collection('user');
 
+const userCollection = db.collection('user');
 const use_history = db.collection('use_history');
 const scoreCollection = db.collection('high_scores');
 //const cardpairCollection = db.collection('card_pair');
@@ -14,6 +14,7 @@ const setCollection = db.collection('flashcard_set');
 userCollection.createIndex({uname:1},{unique:true});
 setCollection.createIndex({id:1},{unique:true});
 scoreCollection.createIndex({setid:1, user:1});
+
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -91,7 +92,7 @@ async function addSet(set){
 }
 async function getSetCount(){
 	const t = await setCollection.countDocuments();
-	console.log("getting set count...");
+	//console.log("getting set count...");
 	return t;
 }
 async function getMaxId(){
@@ -108,6 +109,7 @@ async function clearSets(){
 }
 async function removeSet(id, usercheck){
 	const t = await setCollection.deleteOne({id: id, creating_user: usercheck});
+	const c = await scoreCollection.deleteMany({setid: id});
 	return t;
 }
 async function updateSet(inset, usercheck){ 

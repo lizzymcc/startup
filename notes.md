@@ -84,3 +84,26 @@ We need to use `npm init -y` to set up the packages to start
 update: figured it out. kinda. it's working now and I think I mostly understand why
 
 ARGHH
+
+
+## websocket notes
+8 apr 2025 -- I am so lost. I got an extension until thursday on this deliverable which is great because I still haven't properly started ahd I'm not even sure how to implement it. There's not a lot of user-to-user notification applicability. If it doesn't need to be across multiple clients I could probalby do something with the sunset notifier but I'm not sure if that meets the requirements if we're supposed to be able to test it with multiple browsers.
+
+Also I forgot to push my readme commit to github before I turned in the DB deliverable so currently I have a 0 on that and need to contact a TA and stuff
+
+also also the requirements for this one say we need at least 10 git commits *spread across the assignment time* and. I haven't started yet. And I'm always forgetting to do git commits partway through my work. Might do a commit just with this and the other stuff I've messed with since last commit (Mostly irrelevant to functionality unelss I wind up implementing set editing). Not sure if that counts though lol.
+
+OK so for websocket... what could I do that notifies players things from another player?
+
+- again, easiest option is if we use this to get the sunset notifier working properly, though idk if that would mess with the API application part.
+
+- notify when there's a new high score? Maybe, but which screen(s) would that notify on? All of them? In the sidebar?
+Maybe if the user has a score and someone beats it on the same set?
+- maybe a concurrent users thing?
+- IDK MOST OF THIS STUFF IS HANDLED IN THE DATABASE RIGHT NOW
+
+- maybe we can do some sort of placeholder ping thing just to test if the websocket is working with multiple clients and then use it for a one client thing?
+
+I should look at the project requirements again i think
+
+ok so the first specification says it *can* be "realtime data that your service is generatiing" so I can probably do soemthing with the sunset api. thank heavens.
