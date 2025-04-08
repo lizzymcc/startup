@@ -1,7 +1,10 @@
 const { WebSocketServer } = require('ws');
 
 function wsServer(httpServer){
+	console.log("httpServer: ", httpServer);
 	const socketServer = new WebSocketServer({ server: httpServer });
+	console.log("socketServer: ",socketServer);
+
 
 	socketServer.on('connection', (socket )=> {
 		socket.isAlive = true;
@@ -13,7 +16,9 @@ function wsServer(httpServer){
 			// is there a way to give the socket attributes besides the builtin ones like isAlive? Need to look into this.
 				//looks like probably not. Hm. Also how do we parse message data?
 		socket.on('message', function message(data) {
-			console.log("socket just got a message, data: ", data);
+			const msgtext = String.fromCharCode(...data);
+			console.log("socket just got a message, msgtext: ", msgtext);
+			socket.send(`recieved message: "${msgtext}"`)
 		});
 		
 		//ping/pong function should run on an interval
@@ -23,6 +28,7 @@ function wsServer(httpServer){
 			socket.isAlive = true;
 		});
 	});
+	console.log("on connection thing set up");
 	setInterval(() => {
 		socketServer.clients.forEach(function each(client) {
 		  if (client.isAlive === false) return client.terminate();

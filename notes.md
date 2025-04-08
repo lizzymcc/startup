@@ -110,3 +110,13 @@ ok so the first specification says it *can* be "realtime data that your service 
 
 
 Also if I have time I should really try and mkae the database endpoints more secure bc they're kinda. Not. right now. but websocket stuff first.
+
+
+---
+alright, I think I'm starting to get somewhere, but fun fact: the debugging method taught in the schedule doesn't work on firefox, only chromium(?) browsers. so now I have to dig out microsoft edge lol. hopefully that won't be a problem in the actual implementation. the simon websocket thing works fine in firefox.
+WAIT possibly nvm i needed to reconfigure vite. ...actually no that wouldn't affect the debugging we were doing would it. drat.
+
+
+ok so looking at the simon thing... it has these add- and remove-handler functions, but I thiiink it only needs those because the scores thing needs to be able to show a flexible number of results?
+wait, no, I think they got that with the list of events and the handlers is maybe something different?
+Ok I'm debugging the websocket one and the handlers stuff is really confusing, like I think removehandler isn't actually removing any handlers, and it's a list but they're all the same thing? Idk. Let's just deal with the other stuff first.
