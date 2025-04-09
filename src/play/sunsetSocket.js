@@ -5,7 +5,7 @@ class SunCall {
 	} //do we need anything with the socket id? Idk
 }
 
-class SunsetSocket {
+class SunsetSocketThing {
 	constructor() {
 		let port = window.location.port;
 		const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
@@ -21,12 +21,15 @@ class SunsetSocket {
 	setHandler(handler) {
 		this.handler = handler;
 	}
-	broadcastCall(isRise, time) {
-		const sc = new SunCall(isRise, time);
-		this.socket.send(JSON.stringify(sc));
+	broadcastCall(call) {
+		//const sc = new SunCall(isRise, time);
+		console.log("broadcasting ", call);
+		this.socket.send(JSON.stringify(call));
 	}
 	recieveCall(call) {
 		handler(call);
 	}
 }
+
+const SunsetSocket = new SunsetSocketThing();
 export {SunCall, SunsetSocket };

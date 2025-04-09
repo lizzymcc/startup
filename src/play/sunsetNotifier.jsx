@@ -46,15 +46,15 @@ export function SunsetNotifier(props){
 
 
 	//GETTING TIME DATA FROM THE API (keep this)
-	async function getSunTimes(){
-		const response = await fetch(`https://api.sunrise-sunset.org/json?lat=${uLocation.latitude}&lng=${uLocation.longitude}&formatted=0`,{
+	async function getSunTimes(dateparam = 'today'){
+		const response = await fetch(`https://api.sunrise-sunset.org/json?lat=${uLocation.latitude}&lng=${uLocation.longitude}&formatted=0&date=${dateparam}`,{
 			method: 'get',
 		  }
 		);
 		if (response?.status === 200) {
-			console.log("response: ", response);
+			//console.log("response: ", response);
 			const respobj = await response.json();
-			console.log("respobj: ",respobj);
+			//console.log("respobj: ",respobj);
 			return respobj.results;
 		} else {
 			console.log("response: ", response);
@@ -62,6 +62,16 @@ export function SunsetNotifier(props){
 		}
 	}
 
+	/*function dispResults(results){
+		let c = new Date(Date.now());
+		const opts = {
+			day: "numeric",
+			hour: "2-digit",
+			minute: "2-digit",
+		};
+		let t = Object.keys(results).map((key)=>[key, new Date(results[key])]);
+		return t.sort((a,b)=>(a[1]-b[1])).map((a)=>`${a[0]} time: ${a[1].toLocaleString(opts)}`);	
+	}*/
 
 	//OLD WAY OF UPDATING SUNRISE AND SUNSET TIMES
 
@@ -71,7 +81,8 @@ export function SunsetNotifier(props){
 			getSunTimes().then((result)=>{
 				setSunRise(new Date(result.sunrise));
 				setSunSet(new Date(result.sunset));
-				console.log("results: ", result);
+				console.log("results: ", result); //ok so these do go by calendar day so if this starts before midnight but after sunset... hm.
+
 			});
 			//setSN(`latitude: ${uLocation.latitude}, longitude: ${uLocation.longitude}`);
 		} else {
@@ -84,7 +95,7 @@ export function SunsetNotifier(props){
 			const opts = {
 				hour: "numeric",
 				minute: "numeric",
-				second: "false"
+				second: false
 			};
 			if (Math.abs(sunrise - c) < (1000 * 60 * 30)){
 				setSN(`${c.toLocaleTimeString(opts)} - the sun may be rising in your area`);
@@ -101,10 +112,31 @@ export function SunsetNotifier(props){
 	//React.useEffect(updateSN,[props.timechecker]);
 
 	//NEW WAY OF RECIEVING TIME NOTIFICATIONS AND SENDING INFO
-	async function getNextSunEvent(currentTime){
-		
 
+	async function getNextSunEvent(currentTime = new Date(Date.now())){
+		const r1 = await getSunTimes('today');
+		const set1 = new Date(r1.sunset);
+		const rise1 = new Date(r1.sunrise);
+		if (set1 < currentTime){
+			const r2 = await getSunTimes('tomorrow');
+			const rise2 = new Date(r2.sunrise);
+			return(new SunCall(true, rise2));
+		}
+		if (rise1 < currentTime){
+			return(new SunCall(false, set1));
+		} else {
+			return(new SunCall(true, rise1));
+		}
 	}
+	function sendOverSunRequest(){
+		if (uLocation){
+			console.log("ulocation: ", uLocation, ", sending the thingamabob");
+			getNextSunEvent().then((call)=>SunsetSocket.broadcastCall(call));
+		} else {
+			console.log("location not enabled lol");
+		}
+	}
+	React.useEffect(sendOverSunRequest, [uLocation, props.show]);
 
 	//RETURN STATEMENT (KEEPING)
 
