@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, NavLink, useParams} from 'react-router-dom';
 import '../app.css';
-
+import { SunCall, SunsetSocket } from './sunsetSocket';
 
 
   
@@ -13,6 +13,8 @@ export function SunsetNotifier(props){
 	const [timeNow, setTimeNow] = React.useState(Date.now());
 	const [sunrise, setSunRise] = React.useState(null);
 	const [sunset, setSunSet] = React.useState(null);
+
+	//GETTING LOCATION PERMISSIONS
 	function handlePermission() {
 		navigator.permissions.query({ name: "geolocation" }).then((result) => {
 		  if (result.state === "granted") {
@@ -37,9 +39,14 @@ export function SunsetNotifier(props){
 	}
 	
 	function report(state) {
-	console.log(`Permission ${state}`);
+		//console.log(`Permission ${state}`);
 	}
-	async function getSunsetTime(){
+	React.useEffect(handlePermission,[props.show]);
+
+
+
+	//GETTING TIME DATA FROM THE API (keep this)
+	async function getSunTimes(){
 		const response = await fetch(`https://api.sunrise-sunset.org/json?lat=${uLocation.latitude}&lng=${uLocation.longitude}&formatted=0`,{
 			method: 'get',
 		  }
@@ -55,17 +62,20 @@ export function SunsetNotifier(props){
 		}
 	}
 
+
+	//OLD WAY OF UPDATING SUNRISE AND SUNSET TIMES
+
 	function updateSunTimes(){
 		console.log("location enabled?:",locationEnabled, "uLocation: ", uLocation);
 		if(uLocation){
-			getSunsetTime().then((result)=>{
+			getSunTimes().then((result)=>{
 				setSunRise(new Date(result.sunrise));
 				setSunSet(new Date(result.sunset));
 				console.log("results: ", result);
 			});
 			//setSN(`latitude: ${uLocation.latitude}, longitude: ${uLocation.longitude}`);
 		} else {
-			setSN('Location not enabled');
+			//setSN('Location not enabled');
 		}
 	}
 	function updateSN(){
@@ -86,10 +96,20 @@ export function SunsetNotifier(props){
 			}
 		}
 	}
-	React.useEffect(handlePermission,[props.show]);
-	React.useEffect(updateSunTimes,[locationEnabled, uLocation, props.show]);
-	React.useEffect(updateSN,[props.timechecker]);
-	if (props.show){	
+	//React.useEffect(updateSunTimes,[locationEnabled, uLocation, props.show]);
+
+	//React.useEffect(updateSN,[props.timechecker]);
+
+	//NEW WAY OF RECIEVING TIME NOTIFICATIONS AND SENDING INFO
+	async function getNextSunEvent(currentTime){
+		
+
+	}
+
+	//RETURN STATEMENT (KEEPING)
+
+
+	if (props.show && sunsetnotes != ''){	
 		return(			
 			<div className = "sidebartext sunsetnotes">
 				<p>{sunsetnotes}</p>

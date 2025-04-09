@@ -120,3 +120,21 @@ WAIT possibly nvm i needed to reconfigure vite. ...actually no that wouldn't aff
 ok so looking at the simon thing... it has these add- and remove-handler functions, but I thiiink it only needs those because the scores thing needs to be able to show a flexible number of results?
 wait, no, I think they got that with the list of events and the handlers is maybe something different?
 Ok I'm debugging the websocket one and the handlers stuff is really confusing, like I think removehandler isn't actually removing any handlers, and it's a list but they're all the same thing? Idk. Let's just deal with the other stuff first.
+
+------
+OK SO we need to figure out what data exactly we're sending to and from the socket thing, and the pipeline
+
+ok so the play game, before sending, will get the sunrise/set api info for the location, figure out which is next after the current time (I think sometimes the API only gives you the ones for the calendar day even if both events have passed) and, *if location (and sunrise/set notifications) are enabled* send the request to the socket
+so 
+TO:
+	- a datetime (perhaps a span of datetimes?)
+	- whether the notification is about a sunrise or a sunset
+	- whatever information the websocket needs to know which socket to send it to
+
+Then the websocket end will figure out the time and notify back when it is time, or within a certain range of the time, we'll decide it on that end.
+FROM:
+	- The time of the sunrise/set
+	- which it is
+and then the frontend will parse the times in the timezone, and make the response text. and eventually hide it.
+AND once it gets the notification maybe it recalculates the next time and sends that over?
+ok that works...
