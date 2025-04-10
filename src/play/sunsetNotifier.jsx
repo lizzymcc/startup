@@ -140,18 +140,29 @@ export function SunsetNotifier(props){
 	
 	//RECIEVING INFO:
 	function recieveNotification(call){
-		try {
-			let t1 = new Date(Date.now());
-			const opts = {
-				hour: 'numeric',
-				minute: '2-digit',
-				hour12: true,
-			};
-			let t = new Date(call.time);
-			setSN(`the sun may be ${call.isRise? "rising" : "setting"} in your area! \n Specific sun${call.isRise? "rise" : "set"} time: ${t.toLocaleTimeString([],opts)}\ncurrent time: ${t1.toLocaleTimeString([],opts)}`);
-			
-		} catch (e) {
-			console.log(e);
+		if (call.other){
+			console.log("call.other: ", call.other);
+			if (call.other === "clearnotification"){
+				//console.log("clearing notification");
+				setSN('');
+				sendOverSunRequest();
+			} else {
+				//console.log("wrong other somehow");
+			}
+		} else {
+			try {
+				let t1 = new Date(Date.now());
+				const opts = {
+					hour: 'numeric',
+					minute: '2-digit',
+					hour12: true,
+				};
+				let t = new Date(call.time);
+				setSN(`the sun may be ${call.isRise? "rising" : "setting"} in your area! \n Sun${call.isRise? "rise" : "set"} time: ${t.toLocaleTimeString([],opts)}`);
+
+			} catch (e) {
+				console.log(e);
+			}
 		}
 	}
 	React.useEffect(() => {SunsetSocket.setHandler(recieveNotification)},[]);

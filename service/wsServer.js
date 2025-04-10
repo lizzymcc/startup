@@ -14,12 +14,12 @@ function wsServer(httpServer){
 		socket.hasTime = false;
 		socket.time = 0;
 		socket.isRise = true;
-		console.log("new connection's socket: ", socket);
+		//console.log("new connection's socket: ", socket);
 		//socketServer.clients.add(socket);
 		socket.isAlive = true;
 		socket.on('message', function message(data) {
 			const msgd = JSON.parse(String.fromCharCode(...data));
-			console.log("socket just got a message: ", msgd);
+			//console.log("socket just got a message: ", msgd);
 			socket.hasTime = true;
 			socket.time = new Date(msgd.time);
 			socket.isRise = msgd.isRise;
@@ -45,10 +45,13 @@ function wsServer(httpServer){
 	setInterval(() => {
 		//console.log("client list: ", socketServer.clients);
 		socketServer.clients.forEach(function each(client) {
-			console.log("client:", client);
+			//console.log("client:", client);
 			if (client.hasTime){
-				if (getTimeDiff(client.time) <= 900000){
+				if (getTimeDiff(client.time) < 0){ //780000 //-900000
 					client.hasTime = false;
+					client.send(JSON.stringify({other: "clearnotification"}))
+				} else 	if (getTimeDiff(client.time) <= 900000){
+					//client.hasTime = false;
 					client.send(JSON.stringify(new SunCall(client.isRise, client.time)));
 				}
 			}
