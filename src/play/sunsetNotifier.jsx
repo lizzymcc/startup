@@ -141,19 +141,22 @@ export function SunsetNotifier(props){
 	//RECIEVING INFO:
 	function recieveNotification(call){
 		try {
-			let t = Date.now();
+			let t1 = new Date(Date.now());
 			const opts = {
 				hour: 'numeric',
-				minute: '2-digit'
+				minute: '2-digit',
+				hour12: true,
 			};
-			setSN(`the sun may be ${call.isRise? "rising" : "setting"} in your area! \n Specific sunset time: ${call.time.toLocalTimeString([],opts)}`);
+			let t = new Date(call.time);
+			setSN(`the sun may be ${call.isRise? "rising" : "setting"} in your area! \n Specific sun${call.isRise? "rise" : "set"} time: ${t.toLocaleTimeString([],opts)}\ncurrent time: ${t1.toLocaleTimeString([],opts)}`);
+			
 		} catch (e) {
 			console.log(e);
 		}
 	}
+	React.useEffect(() => {SunsetSocket.setHandler(recieveNotification)},[]);
 
 	//RETURN STATEMENT (KEEPING)
-
 
 	if (props.show && sunsetnotes != ''){	
 		return(			

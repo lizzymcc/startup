@@ -13,13 +13,18 @@ class SunsetSocketThing {
 		this.handler = (e) => {console.log("default handler recieving: ", e);}
 		this.socket.onmessage = async (msg) => {
 			try {
-				const msgtext = JSON.parse(await msg.data.text());
-				console.log(msgtext);
-			} catch {} 
+				const msgtext = JSON.parse(await msg.data);
+				this.handler(msgtext);
+				//console.log("msgtext: ", msgtext);
+			} catch (e) {
+				console.log("recieving error: ", e);
+			} 
 		}
 	}
-	setHandler(handler) {
-		this.handler = handler;
+	setHandler(h) {
+		console.log("current handler: ", this.handler);
+		this.handler = h;
+		console.log("new handler: ", this.handler);
 	}
 	broadcastCall(call) {
 		//const sc = new SunCall(isRise, time);
@@ -27,6 +32,7 @@ class SunsetSocketThing {
 		this.socket.send(JSON.stringify(call));
 	}
 	recieveCall(call) {
+		console.log("recieving call ", call);
 		handler(call);
 	}
 }

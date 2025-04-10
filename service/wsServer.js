@@ -1,5 +1,10 @@
 const { WebSocketServer } = require('ws');
-
+class SunCall {
+	constructor(isRise, time) {
+		this.isRise = isRise;
+		this.time = time;
+	}
+}
 function wsServer(httpServer){
 	console.log("httpServer: ", httpServer);
 	const socketServer = new WebSocketServer({ server: httpServer });
@@ -44,10 +49,7 @@ function wsServer(httpServer){
 			if (client.hasTime){
 				if (getTimeDiff(client.time) <= 900000){
 					client.hasTime = false;
-					client.send(`{isRise: ${client.isRise}, time: ${client.time}}`);
-				} else {
-					console.log("test send");
-					client.send(`{isRise: ${client.isRise}, time: ${client.time}}`);
+					client.send(JSON.stringify(new SunCall(client.isRise, client.time)));
 				}
 			}
 			if (client.isAlive === false) return client.terminate();
