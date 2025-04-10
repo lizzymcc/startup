@@ -23,7 +23,7 @@ class SunsetSocketThing {
 	}
 	broadcastCall(call) {
 		//const sc = new SunCall(isRise, time);
-		console.log("broadcasting ", call);
+		//console.log("broadcasting ", call);
 		this.socket.send(JSON.stringify(call));
 	}
 	recieveCall(call) {

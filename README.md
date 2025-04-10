@@ -132,14 +132,14 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **User login and logout** - I actually did realize that on last deliverable I hadn't actually hooked up the logout function to the backend properly, so I have done that now, and made them work with the DB. 
 - [x] **Stores data in MongoDB** - There's a database in mongodb with all the cardset info, user credentials, and high scores
 - [x] **Stores credentials in MongoDB** - See above
-- [x] **Restricts functionality based on authentication** - I was somewhat doing this already, but yes, it doesn't allow you to access private sets unless you're the creating user. Also some of the backend endpoints have 
+- [x] **Restricts functionality based on authentication** - I was somewhat doing this already, but yes, it doesn't allow you to access private sets unless you're the creating user.
 
 ## 🚀 WebSocket deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
+- [x] **Frontend makes WebSocket connection** - Frontend makes websocket connection
+- [x] **Data sent over WebSocket connection** - frontend sends over the data of the next sunrise/sunset to watch out for
 - [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
 - [ ] **Application is fully functional** - I did not complete this part of the deliverable.

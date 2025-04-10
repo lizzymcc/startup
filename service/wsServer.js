@@ -4,37 +4,55 @@ function wsServer(httpServer){
 	console.log("httpServer: ", httpServer);
 	const socketServer = new WebSocketServer({ server: httpServer });
 	console.log("socketServer: ",socketServer);
-
-
-	socketServer.on('connection', (socket )=> {
+	//const clients = new Clients();
+	socketServer.on('connection', (socket)=> {
+		socket.hasTime = false;
+		socket.time = 0;
+		socket.isRise = true;
+		console.log("new connection's socket: ", socket);
+		//socketServer.clients.add(socket);
 		socket.isAlive = true;
-		console.log("new connection, socket: ", socket);
-		console.log("all clients: ", socketServer.clients);
-		//when recieving a message, the message should have:
-			// - a timestamp of the time at which to send the notification
-			// - some way to determine which socket to send the thing to, which is the socket that this is on. Something like the checking if it's alive thing in peerproxy
-			// is there a way to give the socket attributes besides the builtin ones like isAlive? Need to look into this.
-				//looks like probably not. Hm. Also how do we parse message data?
 		socket.on('message', function message(data) {
-			const msgtext = String.fromCharCode(...data);
-			console.log("socket just got a message, msgtext: ", msgtext);
-			socket.send(`recieved message: "${msgtext}"`)
+			const msgd = JSON.parse(String.fromCharCode(...data));
+			console.log("socket just got a message: ", msgd);
+			socket.hasTime = true;
+			socket.time = new Date(msgd.time);
+			socket.isRise = msgd.isRise;
 		});
 		
+		socket.on('pong', () => {
+			socket.isAlive = true;
+			//console.log("hastime: ", socket.hasTime, "time: ", socket.time);
+		});
 		//ping/pong function should run on an interval
 			//so if the interval is smalle nough, we can probably just use that for the notification? like test the time against the one it's supposed to notify on and send it if it's after that point.
 			//
-		socket.on('pong', () => {
-			socket.isAlive = true;
-		});
 	});
-	console.log("on connection thing set up");
+	function getTimeDiff(targettime){
+		let c = new Date(Date.now());
+		return targettime - c;
+	}
+	function parseTimeDifference(milliseconds){
+		let c = new Date(milliseconds);
+		return `${c.getUTCHours()}:${c.getUTCMinutes()}`;
+	}
+	//console.log("on connection thing set up");
 	setInterval(() => {
+		//console.log("client list: ", socketServer.clients);
 		socketServer.clients.forEach(function each(client) {
-		  if (client.isAlive === false) return client.terminate();
-	
-		  client.isAlive = false;
-		  client.ping();
+			console.log("client:", client);
+			if (client.hasTime){
+				if (getTimeDiff(client.time) <= 900000){
+					client.hasTime = false;
+					client.send(`{isRise: ${client.isRise}, time: ${client.time}}`);
+				} else {
+					console.log("test send");
+					client.send(`{isRise: ${client.isRise}, time: ${client.time}}`);
+				}
+			}
+			if (client.isAlive === false) return client.terminate();
+			client.isAlive = false;
+			client.ping();
 		});
 	  }, 10000);
 }

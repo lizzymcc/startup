@@ -112,7 +112,7 @@ export function SunsetNotifier(props){
 	//React.useEffect(updateSN,[props.timechecker]);
 
 	//NEW WAY OF RECIEVING TIME NOTIFICATIONS AND SENDING INFO
-
+	//SENDING INFO:
 	async function getNextSunEvent(currentTime = new Date(Date.now())){
 		const r1 = await getSunTimes('today');
 		const set1 = new Date(r1.sunset);
@@ -137,6 +137,20 @@ export function SunsetNotifier(props){
 		}
 	}
 	React.useEffect(sendOverSunRequest, [uLocation, props.show]);
+	
+	//RECIEVING INFO:
+	function recieveNotification(call){
+		try {
+			let t = Date.now();
+			const opts = {
+				hour: 'numeric',
+				minute: '2-digit'
+			};
+			setSN(`the sun may be ${call.isRise? "rising" : "setting"} in your area! \n Specific sunset time: ${call.time.toLocalTimeString([],opts)}`);
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	//RETURN STATEMENT (KEEPING)
 

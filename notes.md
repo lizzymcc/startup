@@ -138,3 +138,10 @@ FROM:
 and then the frontend will parse the times in the timezone, and make the response text. and eventually hide it.
 AND once it gets the notification maybe it recalculates the next time and sends that over?
 ok that works...
+
+Ok we've got the frontend sending stuff to the websocket working! And possibly we've got it handling the response right, idk, the backend isn't sending responses yet.
+I've realized that this is gonna be a tricky one to test since its intended use is something that only happens, well, at sunrise and sunset. So we're probably gonna have to figure out other ways to do that? Is there a way I can trick my browser int o thinking it's a different time?  
+---
+OK so we figured out the different time thing -- in edge or other chromium browsers in the debug panel there should be a tab (you might have to use the plus to find it) called "Sensors" where you can emulate different locations!
+
+Also it turns out you ccan store custom variables on sockets in a websocketserver so that makes my job way easier. 
