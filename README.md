@@ -138,8 +138,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [x] **Frontend makes WebSocket connection** - Frontend makes websocket connection
-- [x] **Data sent over WebSocket connection** - frontend sends over the data of the next sunrise/sunset to watch out for
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - websocket listens for  connections to deal with them (wsServer.js)
+- [x] **Frontend makes WebSocket connection** - Sunset notifier uses the sunset socket which connects to the websocket (sunsetNotifier.jsx, sunsetSocket.js) 
+- [x] **Data sent over WebSocket connection** - frontend sends over the data of the next sunrise/sunset to watch out for, websocket recieves it (all three files above)
+- [x] **WebSocket data displayed** - The time that the websocket responds with, at that time, is displayed in the sunset notification widget (sunsetNotifier.jsx)
+- [x] **Application is fully functional** - deployed and yes it's working! :D
